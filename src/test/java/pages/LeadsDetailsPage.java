@@ -131,7 +131,7 @@ public class LeadsDetailsPage extends BasePage {
     }
 
     @Step("verify notification message what 'leads' was created")
-    public WebElement verifyNotificationMessage() {
+    public WebElement getNotificationMessage() {
         log.info("wait notification message ");
         WebElement createdLeadsMessage = driver.findElement(By.xpath(CREATED_LEADS_MESSAGE));
         return createdLeadsMessage;

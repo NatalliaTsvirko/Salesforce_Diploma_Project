@@ -3,7 +3,7 @@
 <suite thread-count="2" name="Test suite" parallel="classes">
 <groups>
         <run>
-            <include name="Negative"/>
+            <include name="Regression"/>
             <include name="Smoke"/>
         </run>
     </groups>

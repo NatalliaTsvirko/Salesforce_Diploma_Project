@@ -47,13 +47,13 @@ public class CreateAccountTest extends BaseTest {
         log.info("fill account modal form with all data");
         accountModal.fillForm(testAccount).clickSaveButton();
         AllureUtils.attachScreenshot(driver);
-        accountsPage.verifyNotificationMessage();
+        accountsPage.getNotificationMessage();
         Account actualAccountDetailsInfo = accountsPage.openDetailsTab()
                 .getAccountDetailsInfo();
         assertEquals(actualAccountDetailsInfo, testAccount, "Account details don't match test account data");
     }
 
-    @Test(description = "Create account only with account name", groups = {"Negative"})
+    @Test(description = "Create account only with account name", groups = {"Smoke"})
     public void createAccountWithAccountName() {
         Account testAccountName = accountsGenerator.getWithAccountName();
         boolean isloggedIn = loginPage.open().login(USERNAME, PASSWORD).isPageOpened();
@@ -65,7 +65,7 @@ public class CreateAccountTest extends BaseTest {
         accountModal.fillForm(testAccountName).clickSaveButton();
         AllureUtils.attachScreenshot(driver);
         log.info("verify notification message");
-        accountsPage.verifyNotificationMessage();
+        accountsPage.getNotificationMessage();
         Account actualAccountDetailsInfo = accountsPage.openDetailsTab()
                 .getAccountDetailsInfo();
         assertEquals(actualAccountDetailsInfo, testAccountName, "Account details don't match test account data");

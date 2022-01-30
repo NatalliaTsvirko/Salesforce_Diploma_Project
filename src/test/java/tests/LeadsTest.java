@@ -11,8 +11,8 @@ import pages.LeadsPage;
 import utils.AllureUtils;
 import utils.LeadsGenerator;
 
+import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
-import static org.testng.AssertJUnit.assertEquals;
 
 
 @Log4j2
@@ -39,7 +39,7 @@ public class LeadsTest extends BaseTest {
 
     @Test(description = "Create leads page",retryAnalyzer = ReTry.class , groups = {"Smoke"})
     public void createLeadsPage() {
-        expectedMessage = "Your lead has been converted";
+        expectedMessage = "Cornelia Octavio Grant Goodwin Bednar DVM";
         boolean isloggedIn = loginPage.open().login(USERNAME, PASSWORD).isPageOpened();
         assertTrue(isloggedIn);
         AllureUtils.attachScreenshot(driver);
@@ -47,27 +47,28 @@ public class LeadsTest extends BaseTest {
         homePage.clickLeadsMenuLink()
                 .clickNewButton();
         leadsModal.fillForm(leadsGenerator.getLeadsWithAllData()).clickSaveButton();
-        leadsPage.verifyNotificationMessage();
+        leadsPage.getNotificationMessage();
         log.info("Clicking on button Status");
         leadsDetailsPage.clickButtonStatus();
         leadsDetailsPage.clickConvertButton();
         AllureUtils.attachScreenshot(driver);
-        String actualMessage = leadsDetailsPage.verifyNotificationMessage().getText();
+        String actualMessage = leadsDetailsPage.getNotificationMessage().getText();
         assertEquals(actualMessage, expectedMessage);
 
     }
 
     @Test(description = "Delete leads page", groups = {"Smoke"})
     public void deleteLead(){
-        String leadName = "awef";
-        boolean isloggedIn = loginPage.open().login(USERNAME, PASSWORD).isPageOpened();
-        assertTrue(isloggedIn);
+        String leadName = "Cornelia Octavio Grant Goodwin Bednar DVM";
+        boolean isLoggedIn = loginPage.open().login(USERNAME, PASSWORD).isPageOpened();
+        assertTrue(isLoggedIn);
         homePage.clickLeadsMenuLink();
         leadsPage.deleteLeads(leadName);
         leadsPage.clickDeleteButton();
-        int numberOfElements =leadsPage.verifyElementNotOnPage(leadName);
-        assertEquals(String.valueOf(numberOfElements), 0, "Element on page");
-
+        AllureUtils.attachScreenshot(driver);
+        leadsPage.getNotificationMessage();
+        int numberOfElements =leadsPage.getVisibleLeadsByCountName(leadName);
+        assertEquals(numberOfElements, 0, "Element on page");
     }
 
 }

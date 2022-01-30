@@ -7,14 +7,14 @@ pipeline {
     }
 
     parameters {
- gitParameter branchFilter: 'origin/(.*)', defaultValue: 'master', name: 'BRANCH', type: 'PT_BRANCH'
+ gitParameter branchFilter: 'origin/(.*)', defaultValue: 'main', name: 'BRANCH', type: 'PT_BRANCH'
 }
 
     stages {
         stage('Run tests') {
             steps {
                 // Get some code from a GitHub repository
-                git branch: "${params.BRANCH}", url: 'https://github.com/NatalyaTsvirko1/TMS_Salesforce_TsvirkoNata.git'
+                git branch: "${params.BRANCH}", url: 'https://github.com/NatalliaTsvirko/Salesforce_Diploma_Project.git'
 
                 // Run Maven on a Unix agent.
                 bat "mvn -Dmaven.test.failure.ignore=true clean test"

@@ -43,7 +43,7 @@ public class ContactsPage extends BasePage {
     }
 
     @Step("Verify notification message 'contact is created' ")
-    public boolean verifyNotificationMessage() {
+    public boolean getNotificationMessage() {
         WebElement successMessage = driver.findElement(SUCCESS_MESSAGE);
         log.info("wait notification message ");
         return successMessage.isDisplayed();

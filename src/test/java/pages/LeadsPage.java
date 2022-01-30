@@ -5,21 +5,22 @@ import modals.LeadsModal;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 
 public class LeadsPage extends BasePage {
 
-    private String listLocator = "//a[contains(@class,'rowActionsPlaceHolder')]";
+    private String listLocator = "//a[text()='%s']//ancestor::tr//a[contains(@class,'slds-button')]";
     private String optionLocator = "//ul[@class='scrollable']//a[@title='Delete']";
+    private String leadName = "//a[text()='%s']/ancestor::div[contains(@class,'listViewContainer ')]";
     final By NEW_BUTTON = By.cssSelector("a[title=New]");
     final By DELETE_BUTTON = By.xpath("//button[@title='Delete']");
     final By DETAILS_TAB = By.xpath("//div[contains(@class,'active')]//*[@id='detailTab__item']");
     final By SUCCESS_MESSAGE = By.xpath("//div[@class='forceVisualMessageQueue']//*[contains(@class,'slds-theme--succes')]");
-    final By LEADS_NAME = By.xpath("//a[text()='%s']/ancestor::div[contains(@class,'listViewContainer ')]");
+
 
     public LeadsPage(WebDriver driver) {
         super(driver);
     }
-
 
     @Override
     public boolean isPageOpened() {
@@ -46,18 +47,19 @@ public class LeadsPage extends BasePage {
         return new LeadsDetailsPage(driver);
     }
 
-    @Step("Verify notification message 'lead is created' ")
-    public boolean verifyNotificationMessage() {
+    @Step("Get notification message ")
+    public boolean getNotificationMessage() {
         log.info("wait notification message ");
+        wait.until(ExpectedConditions.visibilityOfElementLocated(SUCCESS_MESSAGE));
         WebElement successMessage = driver.findElement(SUCCESS_MESSAGE);
         return successMessage.isDisplayed();
     }
 
     @Step("Delete leads")
-    public void deleteLeads(String optionName) {
-        WebElement searchFieldToClick = driver.findElement(By.xpath(listLocator));
+    public void deleteLeads(String nameLead) {
+        WebElement searchFieldToClick = driver.findElement(By.xpath(String.format(listLocator,nameLead)));
         searchFieldToClick.click();
-        WebElement optionToClick = driver.findElement(By.xpath(String.format(optionLocator,optionName)));
+        WebElement optionToClick = driver.findElement(By.xpath(String.format(optionLocator)));
         optionToClick.click();
     }
 
@@ -66,8 +68,8 @@ public class LeadsPage extends BasePage {
         driver.findElement(DELETE_BUTTON).click();
     }
 
-    public int verifyElementNotOnPage(String name){
-        int numberOfElements = driver.findElements(LEADS_NAME).size();
+    public int getVisibleLeadsByCountName(String name){
+        int numberOfElements = driver.findElements(By.xpath(String.format(leadName,name))).size();
         return numberOfElements;
     }
 

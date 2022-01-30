@@ -19,14 +19,14 @@ public class ContactsGenerator {
                 .title(faker.name().title())
                 .department(faker.name().bloodGroup())
                 .fax("663")
-                .email("fdgdt@gmail.com")
+                .email(faker.internet().emailAddress())
                 .phone(faker.phoneNumber().cellPhone())
                 .mobile(faker.phoneNumber().cellPhone())
-                .mailingStreet("f0")
-                .mailingCity("gft")
-                .mailingStateProvince("jj")
-                .mailingZipPostalCode("hhh")
-                .mailingCountry("uuu")
+                .mailingStreet(faker.address().streetAddress())
+                .mailingCity(faker.address().city())
+                .mailingStateProvince(faker.address().secondaryAddress())
+                .mailingZipPostalCode(faker.address().zipCode())
+                .mailingCountry(faker.address().country())
                 .build();
         return contacts;
     }

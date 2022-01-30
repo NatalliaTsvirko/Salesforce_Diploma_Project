@@ -34,19 +34,20 @@ public class CreateContactTest extends BaseTest {
 
     }
 
-    @Test(description = "Create contact with all data", groups = {"Smoke"})
+    @Test(description = "Create contact with all data",retryAnalyzer = ReTry.class, groups = {"Smoke","Regression"})
     public void createContactWithAllData() {
         Contacts testContact = contactsGenerator.getContactsWithAllData();
         boolean isloggedIn = loginPage.open().login(USERNAME, PASSWORD).isPageOpened();
         assertTrue(isloggedIn);
+        AllureUtils.attachScreenshot(driver);
         homePage.clickContactsMenuLink()
                 .clickNewButton();
-        contactsModal.selectOption("Vinnie");
+        contactsModal.selectOption("Swift-Marks");
         AllureUtils.attachScreenshot(driver);
         log.info("waiting until nameAccount will be present");
         contactsModal.fillForm(testContact).clickSaveButton();
         AllureUtils.attachScreenshot(driver);
-        contactsPage.verifyNotificationMessage();
+        contactsPage.getNotificationMessage();
         Contacts actualContactsDetailsInfo = contactsPage.openDetailsTab()
                 .getContactsDetailsInfo();
         assertEquals(actualContactsDetailsInfo, testContact, "Contacts details don't match test account data");

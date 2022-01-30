@@ -5,14 +5,14 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.example</groupId>
-    <artifactId>TMS_Salesforse_TsvirkoNata</artifactId>
+    <artifactId>Salesforce_Diploma_project</artifactId>
     <version>1.0-SNAPSHOT</version>
 
     <dependencies>
         <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
             <artifactId>selenium-java</artifactId>
-            <version>4.1.1</version>
+            <version>3.141.59</version>
         </dependency>
         <dependency>
             <groupId>io.github.bonigarcia</groupId>
@@ -37,8 +37,7 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <version>1.18.22</version>
-            <scope>provided</scope>
+            <version>1.18.8</version>
         </dependency>
         <!-- https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-core -->
         <dependency>
@@ -106,9 +105,9 @@
         </plugins>
     </build>
     <properties>
-        <maven.compiler.source>1.6</maven.compiler.source>
-        <maven.compiler.target>1.6</maven.compiler.target>
-        <suiteXmlFile>src/test/java/resources/smoke.xml</suiteXmlFile>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+        <suiteXmlFile>src/test/resources/SmokeTest.xml</suiteXmlFile>
         <browser>chrome</browser>
         <selenium-version>4.1.1</selenium-version>
         <testng-version>6.14.3</testng-version>

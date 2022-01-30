@@ -3,12 +3,14 @@ package modals;
 import elements.Dropdown;
 import elements.Input;
 import elements.TextArea;
+import io.qameta.allure.Step;
 import lombok.extern.log4j.Log4j2;
 import models.Account;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import pages.AccountsPage;
+import utils.AllureUtils;
 
 @Log4j2
 public class AccountModal extends BaseModal {
@@ -96,13 +98,16 @@ public class AccountModal extends BaseModal {
         return this;
     }
 
+    @Step("Search parent account")
     public void selectOption(String optionName) {
         WebElement searchFieldToClick = driver.findElement(By.xpath(String.format(listLocator)));
         searchFieldToClick.click();
+        AllureUtils.attachScreenshot(driver);
         WebElement optionToClick = driver.findElement(By.xpath(String.format(optionLocator, optionName)));
         optionToClick.click();
     }
 
+    @Step("Click save button")
     public AccountsPage clickSaveButton() {
         log.info("click save button on accounts modal");
         driver.findElement(SAVE_BUTTON).click();

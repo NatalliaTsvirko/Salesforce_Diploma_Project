@@ -42,7 +42,7 @@ public class AccountsPage extends BasePage {
         return new AccountDetailsPage(driver);
     }
     @Step("Verify notification message 'account is created' ")
-    public boolean verifyNotificationMessage() {
+    public boolean getNotificationMessage() {
         log.info("wait notification message ");
         WebElement successMessage = driver.findElement(SUCCESS_MESSAGE);
         return successMessage.isDisplayed();
