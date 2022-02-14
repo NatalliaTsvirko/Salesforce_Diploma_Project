@@ -40,9 +40,10 @@ public class CreateContactTest extends BaseTest {
         assertTrue(isloggedIn);
         homePage.clickContactsMenuLink()
                 .clickNewButton();
-        contactsModal.selectAccountName("Swift-Marks");
+        contactsModal.selectAccountName("Dickens-O'Hara");
         contactsModal.fillForm(testContact).clickSaveButton();
         String expectedMessage = "";
+        //salesforce modal page is broken and i can't take notification message.I'm wait.
         assertEquals(contactsPage.getCreatedNotificationMessage(), expectedMessage);
         Contacts actualContactsDetailsInfo = contactsPage.openDetailsTab()
                 .getContactsDetailsInfo();
