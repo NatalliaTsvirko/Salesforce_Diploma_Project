@@ -1,22 +1,19 @@
 package modals;
 
-import elements.DropdownContactLeadModal;
+import elements.Dropdown;
 import io.qameta.allure.Step;
 import lombok.extern.log4j.Log4j2;
 import models.Contacts;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import pages.ContactsPage;
 import utils.AllureUtils;
 
 
 @Log4j2
 public class ContactsModal extends BaseModal {
 
-    private static final By FIELD_ACCOUNT_NAME = By.xpath("//label[text()='Account Name']");
     private String optionLocator = "//span[@title='%s']/ancestor::ul[@aria-label='Recent Accounts']";
-    final static By SAVE_BUTTON = By.xpath("//*[@title='Save']");
+    private static final By FIELD_ACCOUNT_NAME = By.xpath("//label[text()='Account Name']");
     private static final By TITLE = By.xpath("//input[@name='Title']");
     private static final By SUFFIX = By.xpath("//input[@name='suffix']");
     private static final By FIRST_NAME = By.xpath("//input[@name='firstName']");
@@ -40,10 +37,10 @@ public class ContactsModal extends BaseModal {
 
     public ContactsModal fillForm(Contacts contacts) {
 
-        log.info(String.format("Filling form with account info: $s", contacts));
+        log.info(String.format("Filling form with account info: %s", contacts));
 
         if (contacts.getSalutation() != null) {
-            new DropdownContactLeadModal(driver, "Salutation").selectOption(contacts.getSalutation().getName());
+            new Dropdown(driver, "Salutation").selectOption(contacts.getSalutation().getName());
         }
 
         if (contacts.getFirstName() != null) {
@@ -113,19 +110,11 @@ public class ContactsModal extends BaseModal {
     }
 
     @Step("Select account name from search field")
-    public void selectOption(String optionName) {
-        WebElement searchFieldToClick = driver.findElement((FIELD_ACCOUNT_NAME));
-        searchFieldToClick.click();
+    public void selectAccountName(String optionName) {
+        driver.findElement((FIELD_ACCOUNT_NAME)).click();
         AllureUtils.attachScreenshot(driver);
-        WebElement optionToClick = driver.findElement(By.xpath(String.format(optionLocator, optionName)));
-        optionToClick.click();
-    }
+        driver.findElement(By.xpath(String.format(optionLocator, optionName))).click();
 
-    @Step("Click save button")
-    public ContactsPage clickSaveButton() {
-        log.info("click save button on contact modal");
-        driver.findElement(SAVE_BUTTON).click();
-        return new ContactsPage(driver);
     }
 
 }

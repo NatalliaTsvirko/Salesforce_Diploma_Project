@@ -1,6 +1,6 @@
 package modals;
 
-import elements.Dropdown;
+import elements.DropdownAccount;
 import elements.Input;
 import elements.TextArea;
 import io.qameta.allure.Step;
@@ -9,15 +9,14 @@ import models.Account;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import pages.AccountsPage;
 import utils.AllureUtils;
 
 @Log4j2
-public class AccountModal extends BaseModal {
-    private String listLocator = "//span[text()='Parent Account']";
+public class AccountModal extends BaseModal{
+
+    final static By FIELD_PARENT_ACCOUNT  = By.xpath("//span[text()='Parent Account']");
     private String optionLocator = "//a[@role='option']//div[@title='%s']/ancestor::ul[@class='lookup__list  visible']";
 
-    final static By SAVE_BUTTON = By.xpath("//*[@title='Save']");
 
 
     public AccountModal(WebDriver driver) {
@@ -26,14 +25,14 @@ public class AccountModal extends BaseModal {
 
     public AccountModal fillForm(Account account) {
 
-        log.info(String.format("Filling form with account info: $s",account));
+        log.info(String.format("Filling form with account info: %s",account));
 
         if(account.getAccountName()!= null){
             new Input(driver, "Account Name").write(account.getAccountName());
         }
 
         if(account.getType()!= null){
-            new Dropdown(driver, "Type").selectOption(account.getType().getName());
+            new DropdownAccount(driver, "Type").selectOption(account.getType().getName());
         }
 
         if(account.getWebsite()!= null){
@@ -49,7 +48,7 @@ public class AccountModal extends BaseModal {
         }
 
         if(account.getIndustry()!= null){
-            new Dropdown(driver, "Industry").selectOption(account.getIndustry().getName());
+            new DropdownAccount(driver, "Industry").selectOption(account.getIndustry().getName());
         }
 
         if(account.getEmployees()!= null){
@@ -99,21 +98,12 @@ public class AccountModal extends BaseModal {
     }
 
     @Step("Search parent account")
-    public void selectOption(String optionName) {
-        WebElement searchFieldToClick = driver.findElement(By.xpath(String.format(listLocator)));
+    public void searchParentAccountName(String optionName) {
+        WebElement searchFieldToClick = driver.findElement((FIELD_PARENT_ACCOUNT));
         searchFieldToClick.click();
         AllureUtils.attachScreenshot(driver);
         WebElement optionToClick = driver.findElement(By.xpath(String.format(optionLocator, optionName)));
         optionToClick.click();
     }
 
-    @Step("Click save button")
-    public AccountsPage clickSaveButton() {
-        log.info("click save button on accounts modal");
-        driver.findElement(SAVE_BUTTON).click();
-        return new AccountsPage(driver);
-    }
-
 }
-
-

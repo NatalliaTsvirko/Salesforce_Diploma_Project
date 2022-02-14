@@ -13,6 +13,8 @@
             <class name="tests.CreateAccountTest"></class>
             <class name="tests.LeadsTest"></class>
             <class name="tests.CreateContactTest"></class>
+            <class name="tests.GroupsTest"></class>
+            <class name="tests.CalendarTest"></class>
         </classes>
     </test> <!-- Test -->
 </suite>

@@ -8,9 +8,7 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import pages.AccountDetailsPage;
 import pages.AccountsPage;
-import pages.HomePage;
 import utils.AccountsGenerator;
-import utils.AllureUtils;
 
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
@@ -18,7 +16,6 @@ import static org.testng.Assert.assertTrue;
 @Log4j2
 public class CreateAccountTest extends BaseTest {
 
-    HomePage homePage;
     AccountsPage accountsPage;
     AccountDetailsPage accountDetailsPage;
     AccountModal accountModal;
@@ -27,7 +24,6 @@ public class CreateAccountTest extends BaseTest {
 
     @BeforeClass
     public void initializePages() {
-        homePage = new HomePage(driver);
         accountsPage = new AccountsPage(driver);
         accountDetailsPage = new AccountDetailsPage(driver);
         accountModal = new AccountModal(driver);
@@ -39,15 +35,13 @@ public class CreateAccountTest extends BaseTest {
         Account testAccount = accountsGenerator.getAccountWithAllData();
         boolean isloggedIn = loginPage.open().login(USERNAME, PASSWORD).isPageOpened();
         assertTrue(isloggedIn);
-        AllureUtils.attachScreenshot(driver);
-        log.info("opening account page");
         homePage.clickAccountMenuLink()
                 .clickNewButton();
-        accountModal.selectOption("Winston");
-        log.info("fill account modal form with all data");
+        accountModal.searchParentAccountName("Winston");
         accountModal.fillForm(testAccount).clickSaveButton();
-        AllureUtils.attachScreenshot(driver);
-        accountsPage.getNotificationMessage();
+        String expectedMessage = "";
+        accountsPage.getCreatedNotificationMessage();
+        assertEquals(accountsPage.getCreatedNotificationMessage(), expectedMessage);
         Account actualAccountDetailsInfo = accountsPage.openDetailsTab()
                 .getAccountDetailsInfo();
         assertEquals(actualAccountDetailsInfo, testAccount, "Account details don't match test account data");
@@ -58,17 +52,24 @@ public class CreateAccountTest extends BaseTest {
         Account testAccountName = accountsGenerator.getWithAccountName();
         boolean isloggedIn = loginPage.open().login(USERNAME, PASSWORD).isPageOpened();
         assertTrue(isloggedIn);
-        AllureUtils.attachScreenshot(driver);
-        log.info("opening account page and fill account modal form with account name");
         homePage.clickAccountMenuLink()
                 .clickNewButton();
         accountModal.fillForm(testAccountName).clickSaveButton();
-        AllureUtils.attachScreenshot(driver);
-        log.info("verify notification message");
-        accountsPage.getNotificationMessage();
+        String expectedMessage = "";
+        accountsPage.getCreatedNotificationMessage();
+        assertEquals(accountsPage.getCreatedNotificationMessage(), expectedMessage);
         Account actualAccountDetailsInfo = accountsPage.openDetailsTab()
                 .getAccountDetailsInfo();
         assertEquals(actualAccountDetailsInfo, testAccountName, "Account details don't match test account data");
     }
 
+    @Test(description = "Search account name on account page",groups = {"Regression"})
+    public void searchAccount(){
+        boolean isloggedIn = loginPage.open().login(USERNAME, PASSWORD).isPageOpened();
+        assertTrue(isloggedIn);
+        homePage.clickAccountMenuLink();
+        accountsPage.inputAccountName("Huels Inc");
+        String expectedName = "Huels Inc";
+        assertEquals(accountsPage.getAccountName(),expectedName);
+    }
 }

@@ -2,20 +2,21 @@ package pages;
 
 
 import io.qameta.allure.Step;
+import lombok.extern.log4j.Log4j2;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
+@Log4j2
 public class HomePage extends BasePage {
 
-    final static By SALES_LABEL = By.xpath("//*[@title='Sales']");
-    final static By ACCOUNTS_MENU_LINK = By.xpath("//*[@title='Accounts']");
-    final static By CONTACTS_MENU_LINK = By.xpath("//*[@title='Contacts']");
-    final static By LEADS_MENU_LINK = By.xpath("//*[@title='Leads']");
-    final static By PROFILE_BUTTON = By.xpath("//button[contains(@class,'branding-userProfile-button')]");
-    final static By LOGOUT_LINK = By.xpath("//a[contains(@class,'logout')]");
-    final static By IMG_LOGO = By.xpath("//img[@id='logo']");
-
-
+    private static final By SALES_LABEL = By.xpath("//*[@title='Sales']");
+    private static final By ACCOUNTS_MENU_LINK = By.xpath("//*[@title='Accounts']");
+    private static final By CONTACTS_MENU_LINK = By.xpath("//*[@title='Contacts']");
+    private static final By LEADS_MENU_LINK = By.xpath("//*[@title='Leads']");
+    private static final By CALENDAR_MENU_LINK = By.xpath("//a[@title='Calendar']");
+    private static final By PROFILE_BUTTON = By.xpath("//button[contains(@class,'branding-userProfile-button')]");
+    private static final By LOGOUT_LINK = By.xpath("//a[contains(@class,'logout')]");
+    private static final By GROUPS_LINK = By.xpath("//a[@title='Groups']");
 
     public HomePage(WebDriver driver) {
         super(driver);
@@ -54,19 +55,30 @@ public class HomePage extends BasePage {
         return new LeadsPage(driver);
     }
 
+    @Step("Click calendar menu link")
+    public CalendarPage clickCalendarMenuLink() {
+        log.info("open calendar page");
+        jsClick(driver.findElement(CALENDAR_MENU_LINK));
+        return new CalendarPage(driver);
+    }
+
     @Step("Click on profile button")
-    public HomePage clickProfileButton(){
+    public HomePage clickProfileButton() {
         log.info("open profile contecst menu");
         driver.findElement(PROFILE_BUTTON).click();
         return this;
     }
 
     @Step("Click on logOut link")
-    public boolean clickLogoutLink(){
+    public void clickLogoutLink() {
         log.info("logout user");
         driver.findElement(LOGOUT_LINK).click();
-        driver.findElement(IMG_LOGO).isDisplayed();
-        return true;
+    }
+
+    @Step("Click on File link")
+    public void clickGroupsLink() {
+        log.info("Click on 'groups' link");
+        jsClick(driver.findElement(GROUPS_LINK));
     }
 }
 

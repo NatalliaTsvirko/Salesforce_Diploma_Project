@@ -11,16 +11,17 @@ import lombok.extern.log4j.Log4j2;
 import models.Leads;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
 @Log4j2
 public class LeadsDetailsPage extends BasePage {
 
+
+    private static final By TITLE_COMPANY_NAME = By.xpath("//span[@title='Company']");
     private static final By BUTTON_STATUS_COMPLETE = By.xpath("//button[contains(@class,'slds-button--brand')]//span[text()='Mark Status as Complete']");
     private static final By BUTTON_CONVERT = By.xpath("//span[text()='Convert']");
-    private String CREATED_LEADS_MESSAGE = "//span[text()='Your lead has been converted']";
-    private String INPUT_ACCOUNT_NAME = "//span[text()='Account Name']";
+    private static final By CREATED_LEADS_MESSAGE = By.xpath("//span[text()='Your lead has been converted']");
+    private static final By INPUT_ACCOUNT_NAME = By.xpath("//span[text()='Account Name']");
 
 
     public LeadsDetailsPage(WebDriver driver) {
@@ -29,19 +30,20 @@ public class LeadsDetailsPage extends BasePage {
 
     @Override
     public boolean isPageOpened() {
-        return false;
+        return isElementPresent(TITLE_COMPANY_NAME);
     }
 
     @Override
-    public BasePage open() {
-        return null;
+    public LeadsDetailsPage open() {
+        driver.get(BASE_URL + "/lightning/r/Lead/00Q5j000006bQoFEAU/view");
+        return this;
     }
 
     public Leads getLeadsDetailsInfo() {
 
         Leads leads = Leads.builder().build();
 
-        log.info(String.format("Filling form with account info: $s", leads));
+        log.info(String.format("Filling form with account info: %s", leads));
 
 
         LeadStatus leadsLeadStatus = LeadStatus.fromString(new LightningFormattedElement(driver, "Lead Status").getText());
@@ -51,27 +53,27 @@ public class LeadsDetailsPage extends BasePage {
 
 
         String leadsName = new LightningFormattedElement(driver, "Name").getText();
-        if (leadsName != "") {
+        if (leadsName != null ) {
             leads.setLastName(leadsName);
         }
 
         String leadsTitle = new LightningFormattedElement(driver, "Titel").getText();
-        if (leadsTitle != "") {
+        if (leadsTitle != null ) {
             leads.setTitle(leadsTitle);
         }
 
         String leadsEmail = new LightningFormattedElement(driver, "Email").getText();
-        if (leadsEmail != "") {
+        if (leadsEmail != null ) {
             leads.setEmail(leadsEmail);
         }
 
         String leadsPhone = new LightningFormattedElement(driver, "Phone").getText();
-        if (leadsPhone != "") {
+        if (leadsPhone != null ) {
             leads.setPhone(leadsPhone);
         }
 
         String leadsMobile = new LightningFormattedElement(driver, "Mobile").getText();
-        if (leadsMobile != "") {
+        if (leadsMobile != null ) {
             leads.setMobile(leadsMobile);
         }
 
@@ -81,12 +83,12 @@ public class LeadsDetailsPage extends BasePage {
         }
 
         String leadsWebsite = new LightningFormattedElement(driver, "Website").getText();
-        if (leadsWebsite != "") {
+        if (leadsWebsite != null ) {
             leads.setWebsite(leadsWebsite);
         }
 
         String leadsCompany = new LightningFormattedElement(driver, "Company").getText();
-        if (leadsCompany != "") {
+        if (leadsCompany != null ) {
             leads.setCompany(leadsCompany);
         }
 
@@ -106,7 +108,7 @@ public class LeadsDetailsPage extends BasePage {
         }
 
         String leadsAddress = new LightningFormattedElement(driver, "Address").getText();
-        if (leadsAddress != "") {
+        if (leadsAddress != null ) {
             leads.setSearchAddress(leadsAddress);
         }
 
@@ -124,17 +126,10 @@ public class LeadsDetailsPage extends BasePage {
     @Step("Click button 'convert'")
     public LeadsDetailsPage clickConvertButton() {
         log.info("click convert button on leads modal");
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(INPUT_ACCOUNT_NAME)));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(INPUT_ACCOUNT_NAME));
         driver.findElement(BUTTON_CONVERT).click();
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(CREATED_LEADS_MESSAGE)));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(CREATED_LEADS_MESSAGE));
         return this;
     }
-
-    @Step("verify notification message what 'leads' was created")
-    public WebElement getNotificationMessage() {
-        log.info("wait notification message ");
-        WebElement createdLeadsMessage = driver.findElement(By.xpath(CREATED_LEADS_MESSAGE));
-        return createdLeadsMessage;
-
-    }
 }
+

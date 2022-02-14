@@ -1,10 +1,12 @@
 package pages;
 
 import io.qameta.allure.Step;
+import lombok.extern.log4j.Log4j2;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import utils.AllureUtils;
 
+@Log4j2
 public class LoginPage extends BasePage {
 
     final static By EMAIL_INPUT = By.id("username");
@@ -17,7 +19,7 @@ public class LoginPage extends BasePage {
 
     @Override
     public boolean isPageOpened() {
-        return false;
+        return isElementPresent(LOGIN_BUTTON);
     }
 
     @Override

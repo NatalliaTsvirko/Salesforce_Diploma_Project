@@ -1,14 +1,14 @@
-# TMS_Salesforce_TsvirkoNata
+# Salesforce_Diploma_Project
 
 #libraries used in the project:
 
--selenium version 4.1.1;
+-selenium version 3.141.59;
 
 -webdrivermanager version 5.0.3;
 
 -testNG version 6.14.3;
 
--java faker version 0.18;
+-java faker version 1.0.2;
 
 #CI
 -Jenkins;

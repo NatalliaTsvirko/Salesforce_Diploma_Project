@@ -8,7 +8,6 @@ import org.testng.annotations.Test;
 import pages.ContactDetailsPage;
 import pages.ContactsPage;
 import pages.HomePage;
-import utils.AllureUtils;
 import utils.ContactsGenerator;
 
 import static org.testng.Assert.assertEquals;
@@ -34,22 +33,33 @@ public class CreateContactTest extends BaseTest {
 
     }
 
-    @Test(description = "Create contact with all data",retryAnalyzer = ReTry.class, groups = {"Smoke","Regression"})
+    @Test(description = "Create contact with all data", retryAnalyzer = ReTry.class, groups = {"Smoke", "Regression"})
     public void createContactWithAllData() {
         Contacts testContact = contactsGenerator.getContactsWithAllData();
         boolean isloggedIn = loginPage.open().login(USERNAME, PASSWORD).isPageOpened();
         assertTrue(isloggedIn);
-        AllureUtils.attachScreenshot(driver);
         homePage.clickContactsMenuLink()
                 .clickNewButton();
-        contactsModal.selectOption("Swift-Marks");
-        AllureUtils.attachScreenshot(driver);
-        log.info("waiting until nameAccount will be present");
+        contactsModal.selectAccountName("Swift-Marks");
         contactsModal.fillForm(testContact).clickSaveButton();
-        AllureUtils.attachScreenshot(driver);
-        contactsPage.getNotificationMessage();
+        String expectedMessage = "";
+        assertEquals(contactsPage.getCreatedNotificationMessage(), expectedMessage);
         Contacts actualContactsDetailsInfo = contactsPage.openDetailsTab()
                 .getContactsDetailsInfo();
         assertEquals(actualContactsDetailsInfo, testContact, "Contacts details don't match test account data");
+    }
+
+    @Test(description = "Send email list to contac",groups = {"Smoke"})
+    public void sendEmailList(){
+        boolean isloggedIn = loginPage.open().login(USERNAME, PASSWORD).isPageOpened();
+        assertTrue(isloggedIn);
+        homePage.clickContactsMenuLink();
+        contactsPage.selectContactCheckbox("t78p");
+        contactsPage.clickButtonSendEmail();
+        contactsPage.fillSendList("Hello","All cool");
+        String expectedMessage = "success\n" +
+                "List email was queued.\n" +
+                "Close";
+        assertEquals(contactsPage.getCreatedNotificationMessage(),expectedMessage);
     }
 }

@@ -5,8 +5,9 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
 public class Dropdown extends BaseElement {
-    private String dropdownLocator = "//span[text()='%s']/ancestor::div[contains(@class, 'uiInputSelect')]//a[@class= 'select']";
-    private String optionLocator = "//div[contains(@class, 'uiMenuList') and contains(@class, 'select')]//a[contains(text(), '%s')]";
+
+    private String dropdownLocator = "//label[text()='%s']";
+    private String optionLocator = "//lightning-base-combobox-item[@data-value='%s']";
 
     public Dropdown(WebDriver driver, String label) {
         super(driver, label);
@@ -18,5 +19,4 @@ public class Dropdown extends BaseElement {
         scrollIntoView(optionToClick);
         optionToClick.click();
     }
-
 }

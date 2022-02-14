@@ -8,7 +8,6 @@ public class ContactsGenerator {
 
     public Contacts getContactsWithAllData() {
         Faker faker = new Faker();
-        faker.company().name();
         Contacts contacts = Contacts.builder()
                 .salutation(Salutation.MR)
                 .firstName(faker.name().firstName())

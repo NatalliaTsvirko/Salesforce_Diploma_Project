@@ -5,10 +5,13 @@ import enums.AccountType;
 import enums.Industry;
 import lombok.extern.log4j.Log4j2;
 import models.Account;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
 @Log4j2
 public class AccountDetailsPage extends BasePage {
+
+    private static final By TITLE_DETAILS = By.xpath("//li[@title='Details']");
 
     public AccountDetailsPage(WebDriver driver) {
         super(driver);
@@ -16,18 +19,19 @@ public class AccountDetailsPage extends BasePage {
 
     @Override
     public boolean isPageOpened() {
-        return false;
+        return isElementPresent(TITLE_DETAILS);
     }
 
     @Override
-    public BasePage open() {
-        return null;
+    public AccountDetailsPage open() {
+        driver.get(BASE_URL + "lightning/r/Account/0015j00000XaFT1AAN/view");
+        return this;
     }
 
     public Account getAccountDetailsInfo() {
         Account account = Account.builder().build();
 
-        log.info(String.format("Filling form with account info: $s", account));
+        log.info(String.format("Filling form with account info: %s", account));
 
         String accountName = new LightningFormattedElement(driver, "Account Name").getText();
         if (accountName != null) {

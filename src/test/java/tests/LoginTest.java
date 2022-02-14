@@ -10,7 +10,6 @@ public class LoginTest extends BaseTest {
 
     @Test(description = "Login users with valid data",groups = {"Smoke","Regression"})
     public void positiveLogin() {
-        log.info("Login users");
         boolean isLoggedIn = loginPage.open().login(USERNAME, PASSWORD).isPageOpened();
         assertTrue(isLoggedIn);
     }
@@ -19,9 +18,9 @@ public class LoginTest extends BaseTest {
     public void logoutUser(){
         boolean isLoggedIn = loginPage.open().login(USERNAME, PASSWORD).isPageOpened();
         assertTrue(isLoggedIn);
-        homePage.clickProfileButton();
-        boolean isLogOut = homePage.clickLogoutLink();
-        assertTrue(isLogOut);
+        homePage.clickProfileButton()
+                .clickLogoutLink();
+        assertTrue(loginPage.isPageOpened());
 
     }
 }

@@ -1,17 +1,16 @@
 package modals;
 
-import elements.DropdownContactLeadModal;
+import elements.Dropdown;
+import io.qameta.allure.Step;
 import lombok.extern.log4j.Log4j2;
 import models.Leads;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import pages.ContactsPage;
 
 
 @Log4j2
 public class LeadsModal extends BaseModal {
 
-    final static By SAVE_BUTTON = By.xpath("//*[@title='Save']");
     private static final By FIRST_NAME = By.xpath("//input[@name='firstName']");
     private static final By MIDDLE_NAME = By.xpath("//input[@name='middleName']");
     private static final By LAST_NAME = By.xpath("//input[@name='lastName']");
@@ -28,6 +27,7 @@ public class LeadsModal extends BaseModal {
     private static final By PROVINCE = By.xpath("//input[@name='province']");
     private static final By POSTAL_CODE = By.xpath("//input[@name='postalCode']");
     private static final By COUNTRY = By.xpath("//input[@name='country']");
+    private static final By CREATE_LEAD_MESSAGE = By.xpath("//span[text()='Your lead has been converted']");
 
     public LeadsModal(WebDriver driver) {
         super(driver);
@@ -35,14 +35,14 @@ public class LeadsModal extends BaseModal {
 
     public LeadsModal fillForm(Leads leads) {
 
-        log.info(String.format("Filling form with account info: $s", leads));
+        log.info(String.format("Filling form with account info: %s", leads));
 
         if (leads.getLeadStatus() != null) {
-            new DropdownContactLeadModal(driver, "Lead Status").selectOption(leads.getLeadStatus().getName());
+            new Dropdown(driver, "Lead Status").selectOption(leads.getLeadStatus().getName());
         }
 
         if (leads.getSalutation() != null) {
-            new DropdownContactLeadModal(driver, "Salutation").selectOption(leads.getSalutation().getName());
+            new Dropdown(driver, "Salutation").selectOption(leads.getSalutation().getName());
         }
 
         if (leads.getFirstName() != null) {
@@ -90,11 +90,11 @@ public class LeadsModal extends BaseModal {
         }
 
         if (leads.getLeadSource() != null) {
-            new DropdownContactLeadModal(driver, "Lead Source").selectOption(leads.getLeadSource().getName());
+            new Dropdown(driver, "Lead Source").selectOption(leads.getLeadSource().getName());
         }
 
         if (leads.getRating() != null) {
-            new DropdownContactLeadModal(driver, "Rating").selectOption(leads.getRating().getName());
+            new Dropdown(driver, "Rating").selectOption(leads.getRating().getName());
         }
 
         if (leads.getStreet() != null) {
@@ -119,10 +119,9 @@ public class LeadsModal extends BaseModal {
         return this;
     }
 
-    public ContactsPage clickSaveButton() {
-        log.info("click save button on contact modal");
-        driver.findElement(SAVE_BUTTON).click();
-        return new ContactsPage(driver);
+    @Step("Get text ")
+    public String createLeadText() {
+        return driver.findElement(CREATE_LEAD_MESSAGE).getText();
     }
 
 }

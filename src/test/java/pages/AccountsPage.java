@@ -2,18 +2,20 @@ package pages;
 
 import io.qameta.allure.Step;
 import lombok.extern.log4j.Log4j2;
-import modals.AccountModal;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
+import utils.AllureUtils;
 
 
 @Log4j2
 public class AccountsPage extends BasePage {
 
-    final By NEW_BUTTON = By.cssSelector("a[title=New]");
-    final By DETAILS_TAB = By.xpath("//div[contains(@class,'active')]//*[@id='detailTab__item']");
-    final By SUCCESS_MESSAGE = By.xpath("//div[@class='forceVisualMessageQueue']//*[contains(@class,'slds-theme--succes')]");
+    private static final By COLUMN_NAME = By.xpath("//span[@title='Account Name']");
+    private static final By DETAILS_TAB = By.xpath("//div[contains(@class,'active')]//*[@id='detailTab__item']");
+    private static final By SEARCH_FIELD = By.xpath("//label[text()='Search this list...']/following::input[@type='search']");
+    private static final By FIND_ACCOUNT_NAME = By.xpath("//th//a[@data-refid='recordId']");
 
     public AccountsPage(WebDriver driver) {
         super(driver);
@@ -21,7 +23,7 @@ public class AccountsPage extends BasePage {
 
     @Override
     public boolean isPageOpened() {
-        return false;
+        return isElementPresent(COLUMN_NAME);
     }
 
     @Override
@@ -29,23 +31,32 @@ public class AccountsPage extends BasePage {
         driver.get(BASE_URL + "/lightning/o/Account/list?filterName=Recent");
         return this;
     }
-    @Step("Click 'new' button on account page")
-    public AccountModal clickNewButton() {
-        log.info("clicking new button on account page");
-        driver.findElement(NEW_BUTTON).click();
-        return new AccountModal(driver);
-    }
+
     @Step("Open detail page after creating an account")
     public AccountDetailsPage openDetailsTab() {
         log.info("open details table");
         driver.findElement(DETAILS_TAB).click();
         return new AccountDetailsPage(driver);
     }
-    @Step("Verify notification message 'account is created' ")
-    public boolean getNotificationMessage() {
-        log.info("wait notification message ");
-        WebElement successMessage = driver.findElement(SUCCESS_MESSAGE);
-        return successMessage.isDisplayed();
+
+    @Step("Input in search field account name")
+    public void inputAccountName(String accountName) {
+        log.info("input account name");
+        Actions actions = new Actions(driver);
+        actions.moveToElement(driver.findElement(SEARCH_FIELD))
+                .click()
+                .sendKeys(accountName, Keys.ENTER)
+                .pause(3)
+                .build()
+                .perform();
+    }
+
+    @Step("Get searching account name")
+    public String getAccountName() {
+        log.info("get account name");
+        AllureUtils.attachScreenshot(driver);
+        return driver.findElement(FIND_ACCOUNT_NAME).getText();
+
     }
 
 }

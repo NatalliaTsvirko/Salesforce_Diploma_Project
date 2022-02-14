@@ -4,11 +4,12 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
-public class DropdownContactLeadModal extends  BaseElement{
-    private String dropdownLocator = "//label[text()='%s']";
-    private String optionLocator = "//lightning-base-combobox-item[@data-value='%s']";
+public class DropdownAccount extends BaseElement {
 
-    public DropdownContactLeadModal(WebDriver driver, String label) {
+    private String dropdownLocator = "//span[text()='%s']/ancestor::div[contains(@class, 'uiInputSelect')]//a[@class= 'select']";
+    private String optionLocator = "//div[contains(@class, 'uiMenuList') and contains(@class, 'select')]//a[contains(text(), '%s')]";
+
+    public DropdownAccount(WebDriver driver, String label) {
         super(driver, label);
     }
 
@@ -18,4 +19,5 @@ public class DropdownContactLeadModal extends  BaseElement{
         scrollIntoView(optionToClick);
         optionToClick.click();
     }
+
 }
