@@ -6,7 +6,7 @@ import lombok.Data;
 
 @Data
 @Builder
-public class Groups {
+public class Group {
 
     private String name;
     private String description;

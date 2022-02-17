@@ -39,9 +39,9 @@ public abstract class BasePage {
     }
 
     @Step("Verify notification message ")
-    public String getCreatedNotificationMessage() {
+    public boolean isNotificationMessageDisplayed() {
         log.info("wait notification message ");
-        return driver.findElement(SUCCESS_MESSAGE).getText();
+        return driver.findElement(SUCCESS_MESSAGE).isDisplayed();
 
     }
 

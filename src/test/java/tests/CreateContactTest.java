@@ -1,8 +1,10 @@
 package tests;
 
+import io.qameta.allure.Description;
 import lombok.extern.log4j.Log4j2;
 import modals.ContactsModal;
-import models.Contacts;
+import models.Contact;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import pages.ContactDetailsPage;
@@ -33,34 +35,37 @@ public class CreateContactTest extends BaseTest {
 
     }
 
-    @Test(description = "Create contact with all data", retryAnalyzer = ReTry.class, groups = {"Smoke", "Regression"})
+    @AfterMethod
+    public void clearCookie() {
+        driver.manage().deleteAllCookies();
+        driver.navigate().refresh();
+    }
+
+    @Test(description = "Create contact with all data",  groups = {"Smoke", "Regression"})
+    @Description("Create contact with all data")
     public void createContactWithAllData() {
-        Contacts testContact = contactsGenerator.getContactsWithAllData();
+        Contact testContact = contactsGenerator.getContactsWithAllData();
         boolean isloggedIn = loginPage.open().login(USERNAME, PASSWORD).isPageOpened();
         assertTrue(isloggedIn);
         homePage.clickContactsMenuLink()
                 .clickNewButton();
-        contactsModal.selectAccountName("Dickens-O'Hara");
+        contactsModal.selectAccountName("Raynor-Boehm");
         contactsModal.fillForm(testContact).clickSaveButton();
-        String expectedMessage = "";
-        //salesforce modal page is broken and i can't take notification message.I'm wait.
-        assertEquals(contactsPage.getCreatedNotificationMessage(), expectedMessage);
-        Contacts actualContactsDetailsInfo = contactsPage.openDetailsTab()
+        assertTrue(contactsPage.isNotificationMessageDisplayed());
+        Contact actualContactsDetailsInfo = contactsPage.openDetailsTab()
                 .getContactsDetailsInfo();
         assertEquals(actualContactsDetailsInfo, testContact, "Contacts details don't match test account data");
     }
 
-    @Test(description = "Send email list to contac",groups = {"Smoke"})
+    @Test(description = "Send email list to contact",groups = {"Smoke"})
+    @Description("Send email list to contact")
     public void sendEmailList(){
         boolean isloggedIn = loginPage.open().login(USERNAME, PASSWORD).isPageOpened();
         assertTrue(isloggedIn);
         homePage.clickContactsMenuLink();
-        contactsPage.selectContactCheckbox("t78p");
+        contactsPage.setContactCheckbox("Asa Hintz");
         contactsPage.clickButtonSendEmail();
-        contactsPage.fillSendList("Hello","All cool");
-        String expectedMessage = "success\n" +
-                "List email was queued.\n" +
-                "Close";
-        assertEquals(contactsPage.getCreatedNotificationMessage(),expectedMessage);
+        contactsPage.fillFormSendList("Hello","All cool");
+        assertTrue(contactsPage.isNotificationMessageDisplayed());
     }
 }

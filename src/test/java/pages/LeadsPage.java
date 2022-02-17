@@ -9,8 +9,8 @@ import org.openqa.selenium.WebElement;
 @Log4j2
 public class LeadsPage extends BasePage {
 
-    private String listLocator = "//a[text()='%s']//ancestor::tr//a[contains(@class,'slds-button')]";
-    private String leadName = "//a[text()='%s']/ancestor::div[contains(@class,'listViewContainer ')]";
+    private String listLocator = "//a[@title='%s']//ancestor::tr//a[contains(@class,'slds-button')]";
+    private String leadName = "//a[@title='%s']/ancestor::div[contains(@class,'listViewContainer ')]";
     private static final By DELETE_OPTION = By.xpath("//ul[@class='scrollable']//a[@title='Delete']");
     private static final By NEW_BUTTON = By.cssSelector("a[title=New]");
     private static final By DELETE_BUTTON = By.xpath("//button[@title='Delete']");
@@ -53,10 +53,11 @@ public class LeadsPage extends BasePage {
     }
 
     @Step("Get leads name list ")
-    public int getVisibleLeadsName(String name) {
+    public int getVisibleLeadName(String name) {
         int numberOfElements = driver.findElements(By.xpath(String.format(leadName, name))).size();
         return numberOfElements;
     }
+
 
 }
 

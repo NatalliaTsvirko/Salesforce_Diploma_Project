@@ -43,7 +43,7 @@ public class ContactsPage extends BasePage {
     }
 
     @Step("Send list email to contact")
-    public void selectContactCheckbox(String contactName) {
+    public void setContactCheckbox(String contactName) {
         driver.findElement(By.xpath(String.format(contactCheckbox, contactName))).click();
 
     }
@@ -54,7 +54,7 @@ public class ContactsPage extends BasePage {
     }
 
     @Step("Fill form send list")
-    public void fillSendList(String subject, String text) {
+    public void fillFormSendList(String subject, String text) {
         wait.until(ExpectedConditions.visibilityOfElementLocated(SUBJECT_INPUT));
         driver.findElement(SUBJECT_INPUT).sendKeys(subject);
         driver.findElement(IFRAME).click();

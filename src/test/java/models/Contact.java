@@ -6,7 +6,7 @@ import lombok.Data;
 
 @Data
 @Builder
-public class Contacts {
+public class Contact {
     private String phone;
     private String mobile;
     private String middleName;

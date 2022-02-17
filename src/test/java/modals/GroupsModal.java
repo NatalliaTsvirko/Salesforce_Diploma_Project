@@ -4,7 +4,7 @@ import elements.DropdownCalendarGroups;
 import elements.TextArea;
 import io.qameta.allure.Step;
 import lombok.extern.log4j.Log4j2;
-import models.Groups;
+import models.Group;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -22,29 +22,30 @@ public class GroupsModal extends BaseModal {
     private static final By CHOOSE_FILE_BUTTON = By.xpath("//input[@type='file']");
     private static final By NEXT_BUTTON = By.xpath("//span[text()='Next']/ancestor::button[contains(@class,'next')]");
     private static final By DONE_BUTTON = By.xpath("//span[text()='Done']/ancestor::button[contains(@class,'finish')]");
+    private static final By GROUP_DETAILS_TEXT = By.xpath("//span[@title='Group Details']");
 
     public GroupsModal(WebDriver driver) {
         super(driver);
     }
 
-    public GroupsModal fillForm(Groups groups) {
+    public GroupsModal fillForm(Group group) {
 
-        log.info(String.format("Filling form with account info: %s", groups));
+        log.info(String.format("Filling form with account info: %s", group));
 
-        if (groups.getName() != null) {
-            driver.findElement(INPUT_NAME).sendKeys(groups.getName());
+        if (group.getName() != null) {
+            driver.findElement(INPUT_NAME).sendKeys(group.getName());
         }
 
-        if (groups.getDescription() != null) {
-            new TextArea(driver, "Description").write(groups.getDescription());
+        if (group.getDescription() != null) {
+            new TextArea(driver, "Description").write(group.getDescription());
         }
 
-        if (groups.getInformation() != null) {
-            driver.findElement(TEXT_BOX).sendKeys(groups.getInformation());
+        if (group.getInformation() != null) {
+            driver.findElement(TEXT_BOX).sendKeys(group.getInformation());
         }
 
-        if (groups.getAccessType() != null) {
-            new DropdownCalendarGroups(driver,"Access Type").selectOptions(groups.getAccessType().getName());
+        if (group.getAccessType() != null) {
+            new DropdownCalendarGroups(driver,"Access Type").selectOptions(group.getAccessType().getName());
         }
 
         return this;
@@ -61,8 +62,10 @@ public class GroupsModal extends BaseModal {
         WebElement input = driver.findElement(CHOOSE_FILE_BUTTON);
         File file = new File("src/main/resources/spongebob.jpg");
         input.sendKeys(file.getAbsolutePath());
-        driver.findElement(NEXT_BUTTON).click();
+        wait.until(ExpectedConditions.elementToBeClickable(NEXT_BUTTON)).click();
+        //driver.findElement(NEXT_BUTTON).click();
         wait.until(ExpectedConditions.elementToBeClickable(DONE_BUTTON)).click();
+        wait.until(ExpectedConditions.visibilityOfElementLocated(GROUP_DETAILS_TEXT));
     }
 
 }

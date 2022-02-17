@@ -6,6 +6,7 @@ import lombok.extern.log4j.Log4j2;
 import modals.CalendarModal;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import utils.AllureUtils;
 
 @Log4j2
@@ -35,15 +36,18 @@ public class CalendarPage extends BasePage{
     @Step("Click 'new event' button on calendar page")
     public CalendarModal clickNewEventButton() {
         log.info("clicking new button on account page");
-        driver.findElement(BUTTON_NEW_EVENT).click();
+        wait.until(ExpectedConditions.elementToBeClickable(BUTTON_NEW_EVENT));
+        jsClick(driver.findElement(BUTTON_NEW_EVENT));
         return new CalendarModal(driver);
     }
 
     @Step("Select view decoration page")
-    public void selectDecorationPageView(String optionName) {
-        driver.findElement((LINK_VIEW)).click();
+    public void setDecorationPageView(String optionName) {
+        wait.until(ExpectedConditions.elementToBeClickable(LINK_VIEW));
+        jsClick(driver.findElement(LINK_VIEW));
         AllureUtils.attachScreenshot(driver);
         driver.findElement(By.xpath(String.format(optionViewCalendar, optionName))).click();
+        wait.until(ExpectedConditions.visibilityOfElementLocated(BUTTON_NEW_EVENT));
 
     }
 }

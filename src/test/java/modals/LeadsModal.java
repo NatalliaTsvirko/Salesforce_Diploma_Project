@@ -3,7 +3,7 @@ package modals;
 import elements.Dropdown;
 import io.qameta.allure.Step;
 import lombok.extern.log4j.Log4j2;
-import models.Leads;
+import models.Lead;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
@@ -33,88 +33,88 @@ public class LeadsModal extends BaseModal {
         super(driver);
     }
 
-    public LeadsModal fillForm(Leads leads) {
+    public LeadsModal fillForm(Lead lead) {
 
-        log.info(String.format("Filling form with account info: %s", leads));
+        log.info(String.format("Filling form with account info: %s", lead));
 
-        if (leads.getLeadStatus() != null) {
-            new Dropdown(driver, "Lead Status").selectOption(leads.getLeadStatus().getName());
+        if (lead.getLeadStatus() != null) {
+            new Dropdown(driver, "Lead Status").selectOption(lead.getLeadStatus().getName());
         }
 
-        if (leads.getSalutation() != null) {
-            new Dropdown(driver, "Salutation").selectOption(leads.getSalutation().getName());
+        if (lead.getSalutation() != null) {
+            new Dropdown(driver, "Salutation").selectOption(lead.getSalutation().getName());
         }
 
-        if (leads.getFirstName() != null) {
-            driver.findElement(FIRST_NAME).sendKeys(leads.getFirstName());
+        if (lead.getFirstName() != null) {
+            driver.findElement(FIRST_NAME).sendKeys(lead.getFirstName());
         }
 
-        if (leads.getMiddleName() != null) {
-            driver.findElement(MIDDLE_NAME).sendKeys(leads.getMiddleName());
+        if (lead.getMiddleName() != null) {
+            driver.findElement(MIDDLE_NAME).sendKeys(lead.getMiddleName());
         }
 
-        if (leads.getLastName() != null) {
-            driver.findElement(LAST_NAME).sendKeys(leads.getLastName());
+        if (lead.getLastName() != null) {
+            driver.findElement(LAST_NAME).sendKeys(lead.getLastName());
         }
 
-        if (leads.getSuffix() != null) {
-            driver.findElement(SUFFIX).sendKeys(leads.getSuffix());
+        if (lead.getSuffix() != null) {
+            driver.findElement(SUFFIX).sendKeys(lead.getSuffix());
         }
 
-        if (leads.getWebsite() != null) {
-            driver.findElement(WEBSITE).sendKeys(leads.getWebsite());
+        if (lead.getWebsite() != null) {
+            driver.findElement(WEBSITE).sendKeys(lead.getWebsite());
         }
 
-        if (leads.getTitle() != null) {
-            driver.findElement(TITLE).sendKeys(leads.getTitle());
+        if (lead.getTitle() != null) {
+            driver.findElement(TITLE).sendKeys(lead.getTitle());
         }
 
-        if (leads.getEmail() != null) {
-            driver.findElement(EMAIL).sendKeys(leads.getEmail());
+        if (lead.getEmail() != null) {
+            driver.findElement(EMAIL).sendKeys(lead.getEmail());
         }
 
-        if (leads.getCompany() != null) {
-            driver.findElement(COMPANY).sendKeys(leads.getCompany());
+        if (lead.getCompany() != null) {
+            driver.findElement(COMPANY).sendKeys(lead.getCompany());
         }
 
-        if (leads.getPhone() != null) {
-            driver.findElement(PHONE).sendKeys(leads.getPhone());
+        if (lead.getPhone() != null) {
+            driver.findElement(PHONE).sendKeys(lead.getPhone());
         }
 
-        if (leads.getNumberOfEmployee() != null) {
-            driver.findElement(NUMBER_OF_EMPLOYEE).sendKeys(leads.getNumberOfEmployee());
+        if (lead.getNumberOfEmployee() != null) {
+            driver.findElement(NUMBER_OF_EMPLOYEE).sendKeys(lead.getNumberOfEmployee());
         }
 
-        if (leads.getMobile() != null) {
-            driver.findElement(MOBILE_PHONE).sendKeys(leads.getMobile());
+        if (lead.getMobile() != null) {
+            driver.findElement(MOBILE_PHONE).sendKeys(lead.getMobile());
         }
 
-        if (leads.getLeadSource() != null) {
-            new Dropdown(driver, "Lead Source").selectOption(leads.getLeadSource().getName());
+        if (lead.getLeadSource() != null) {
+            new Dropdown(driver, "Lead Source").selectOption(lead.getLeadSource().getName());
         }
 
-        if (leads.getRating() != null) {
-            new Dropdown(driver, "Rating").selectOption(leads.getRating().getName());
+        if (lead.getRating() != null) {
+            new Dropdown(driver, "Rating").selectOption(lead.getRating().getName());
         }
 
-        if (leads.getStreet() != null) {
-            driver.findElement(STREET).sendKeys(leads.getStreet());
+        if (lead.getStreet() != null) {
+            driver.findElement(STREET).sendKeys(lead.getStreet());
         }
 
-        if (leads.getCity() != null) {
-            driver.findElement(CITY).sendKeys(leads.getCity());
+        if (lead.getCity() != null) {
+            driver.findElement(CITY).sendKeys(lead.getCity());
         }
 
-        if (leads.getStateProvince() != null) {
-            driver.findElement(PROVINCE).sendKeys(leads.getStateProvince());
+        if (lead.getStateProvince() != null) {
+            driver.findElement(PROVINCE).sendKeys(lead.getStateProvince());
         }
 
-        if (leads.getZipPostalCode() != null) {
-            driver.findElement(POSTAL_CODE).sendKeys(leads.getZipPostalCode());
+        if (lead.getZipPostalCode() != null) {
+            driver.findElement(POSTAL_CODE).sendKeys(lead.getZipPostalCode());
         }
 
-        if (leads.getCountry() != null) {
-            driver.findElement(COUNTRY).sendKeys(leads.getCountry());
+        if (lead.getCountry() != null) {
+            driver.findElement(COUNTRY).sendKeys(lead.getCountry());
         }
         return this;
     }

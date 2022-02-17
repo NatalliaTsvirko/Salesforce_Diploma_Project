@@ -2,7 +2,7 @@ package pages;
 
 import elements.LightningFormattedElement;
 import lombok.extern.log4j.Log4j2;
-import models.Contacts;
+import models.Contact;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
@@ -26,49 +26,49 @@ public class ContactDetailsPage extends BasePage {
         return this;
     }
 
-    public Contacts getContactsDetailsInfo() {
+    public Contact getContactsDetailsInfo() {
 
-        Contacts contacts = Contacts.builder().build();
+        Contact contacts = Contact.builder().build();
 
         log.info(String.format("Filling form with account info: %s", contacts));
 
         String contactName = new LightningFormattedElement(driver, "Name").getText();
-        if (contactName != null ) {
+        if (contactName != "" ) {
             contacts.setFirstName(contactName);
         }
 
         String contactsAccountName = new LightningFormattedElement(driver, "Account Name").getText();
-        if (contactsAccountName != null ) {
+        if (contactsAccountName != "" ) {
             contacts.setAccountName(contactsAccountName);
         }
 
         String contactsTitle = new LightningFormattedElement(driver, "Title").getText();
-        if (contactsTitle != null ) {
+        if (contactsTitle != "" ) {
             contacts.setTitle(contactsTitle);
         }
 
         String contactsPhone = new LightningFormattedElement(driver, "Phone").getText();
-        if (contactsPhone != null ) {
+        if (contactsPhone != "" ) {
             contacts.setPhone(contactsPhone);
         }
 
         String contactsEmail = new LightningFormattedElement(driver, "Email").getText();
-        if (contactsEmail != null ) {
+        if (contactsEmail != "" ) {
             contacts.setEmail(contactsEmail);
         }
 
         String contactsMobile = new LightningFormattedElement(driver, "Mobile").getText();
-        if (contactsMobile != null ) {
+        if (contactsMobile != "" ) {
             contacts.setMobile(contactsMobile);
         }
 
         String contactsReportsTo = new LightningFormattedElement(driver, "Reports To").getText();
-        if (contactsReportsTo != null ) {
+        if (contactsReportsTo != "" ) {
             contacts.setReportsTo(contactsReportsTo);
         }
 
         String contactsFax = new LightningFormattedElement(driver, "Fax").getText();
-        if (contactsFax != null ) {
+        if (contactsFax != "" ) {
             contacts.setFax(contactsFax);
         }
         return contacts;

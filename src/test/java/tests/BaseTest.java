@@ -36,6 +36,7 @@ public class BaseTest {
 
     }
 
+
     @AfterClass(alwaysRun = true)
     @Step("Close browser")
     public void tearDown() {

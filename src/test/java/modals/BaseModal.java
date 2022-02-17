@@ -11,7 +11,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 @Log4j2
 public class BaseModal {
 
-    final static By SAVE_BUTTON = By.xpath("//*[@title='Save']");
+    private static final By SAVE_BUTTON = By.xpath("//*[@title='Save']");
 
     WebDriver driver;
     WebDriverWait wait;

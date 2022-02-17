@@ -40,7 +40,7 @@ public class AccountsPage extends BasePage {
     }
 
     @Step("Input in search field account name")
-    public void inputAccountName(String accountName) {
+    public void setAccountName(String accountName) {
         log.info("input account name");
         Actions actions = new Actions(driver);
         actions.moveToElement(driver.findElement(SEARCH_FIELD))

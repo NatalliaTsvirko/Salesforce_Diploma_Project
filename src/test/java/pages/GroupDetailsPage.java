@@ -1,8 +1,8 @@
 package pages;
 
-import elements.LightningFormattedElement;
+import elements.GroupDetailElement;
 import lombok.extern.log4j.Log4j2;
-import models.Groups;
+import models.Group;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
@@ -26,21 +26,22 @@ public class GroupDetailsPage extends BasePage {
         return this;
     }
 
-    public Groups getGroupsDetailsInfo() {
+    public Group getGroupsDetailsInfo() {
 
-        Groups groups = Groups.builder().build();
+        Group groups = Group.builder().build();
 
         log.info(String.format("Filling form with account info: %s", groups));
 
-        String groupsDescription = new LightningFormattedElement(driver, "Description").getText();
-        if (groupsDescription != null ) {
+        String groupsDescription = new GroupDetailElement(driver, "Description").getTextDescription();
+        if (groupsDescription != "" ) {
             groups.setDescription(groupsDescription);
         }
 
-        String groupsInformation = new LightningFormattedElement(driver, "Information").getText();
-        if (groupsInformation != null ) {
+        String groupsInformation = new GroupDetailElement(driver, "Information").getTextInformation();
+        if (groupsInformation != "" ) {
             groups.setInformation(groupsInformation);
         }
         return groups;
     }
+
 }

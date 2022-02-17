@@ -1,13 +1,14 @@
 package tests;
 
+import io.qameta.allure.Description;
 import modals.CalendarModal;
 import models.Calendar;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import pages.CalendarPage;
 import utils.CalendarGenerator;
 
-import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
 public class CalendarTest extends BaseTest {
@@ -25,7 +26,15 @@ public class CalendarTest extends BaseTest {
 
     }
 
+    @AfterMethod
+    public void clearCookie() {
+        driver.manage().deleteAllCookies();
+        driver.navigate().refresh();
+    }
+
+
     @Test(description = "Create calendar event and verify notification message", groups = {"Regression"})
+    @Description("Create calendar event and verify notification message")
     public void createNewEvent() {
         Calendar testCalendar = calendarGenerator.getCalendarData();
         boolean isloggedIn = loginPage.open().login(USERNAME, PASSWORD).isPageOpened();
@@ -34,9 +43,8 @@ public class CalendarTest extends BaseTest {
                 .clickNewEventButton();
         calendarModal.fillForm(testCalendar)
                 .clickSaveButton();
-        String expectedMessage = "Event Call was created.";
-        assertEquals(calendarPage.getCreatedNotificationMessage(), expectedMessage);
-        //here don't have detail page.Only notification message
+        assertTrue(calendarPage.isNotificationMessageDisplayed());
+        calendarPage.setDecorationPageView("Table");
 
     }
 }

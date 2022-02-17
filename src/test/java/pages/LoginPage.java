@@ -9,9 +9,9 @@ import utils.AllureUtils;
 @Log4j2
 public class LoginPage extends BasePage {
 
-    final static By EMAIL_INPUT = By.id("username");
-    final static By PASSWORD_INPUT = By.id("password");
-    final static By LOGIN_BUTTON = By.id("Login");
+    private static final By EMAIL_INPUT = By.id("username");
+    private static final By PASSWORD_INPUT = By.id("password");
+    private static final By LOGIN_BUTTON = By.id("Login");
 
     public LoginPage(WebDriver driver) {
         super(driver);
@@ -37,4 +37,5 @@ public class LoginPage extends BasePage {
         AllureUtils.attachScreenshot(driver);
         return new HomePage(driver);
     }
+
 }

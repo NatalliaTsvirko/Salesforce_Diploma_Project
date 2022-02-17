@@ -3,14 +3,13 @@ package utils;
 import com.github.javafaker.Faker;
 
 import enums.*;
-import models.Leads;
+import models.Lead;
 
 public class LeadsGenerator {
 
-    public Leads getLeadsWithAllData() {
+    public Lead getLeadWithAllData() {
         Faker faker = new Faker();
-        faker.company().name();
-        Leads leads = Leads.builder()
+        Lead leads = Lead.builder()
                 .leadStatus(LeadStatus.NURTURING)
                 .salutation(Salutation.MRS)
                 .firstName(faker.name().firstName())
@@ -31,5 +30,16 @@ public class LeadsGenerator {
                 .build();
 
         return leads;
+    }
+
+    public Lead getLeadWithName() {
+        Faker faker = new Faker();
+        Lead lead = Lead.builder()
+                .leadStatus(LeadStatus.NURTURING)
+                .firstName(faker.name().firstName())
+                .lastName(faker.name().lastName())
+                .company(faker.company().name())
+                .build();
+        return lead;
     }
 }

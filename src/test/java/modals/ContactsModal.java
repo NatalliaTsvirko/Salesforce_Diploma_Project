@@ -3,7 +3,7 @@ package modals;
 import elements.Dropdown;
 import io.qameta.allure.Step;
 import lombok.extern.log4j.Log4j2;
-import models.Contacts;
+import models.Contact;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import utils.AllureUtils;
@@ -35,7 +35,7 @@ public class ContactsModal extends BaseModal {
         super(driver);
     }
 
-    public ContactsModal fillForm(Contacts contacts) {
+    public ContactsModal fillForm(Contact contacts) {
 
         log.info(String.format("Filling form with account info: %s", contacts));
 

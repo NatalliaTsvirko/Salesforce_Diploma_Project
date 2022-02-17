@@ -6,7 +6,7 @@ import lombok.Data;
 
 @Data
 @Builder
-public class Leads {
+public class Lead {
 
     private LeadStatus leadStatus;
     private Salutation salutation;

@@ -14,8 +14,8 @@ import utils.AllureUtils;
 @Log4j2
 public class AccountModal extends BaseModal{
 
-    final static By FIELD_PARENT_ACCOUNT  = By.xpath("//span[text()='Parent Account']");
-    private String optionLocator = "//a[@role='option']//div[@title='%s']/ancestor::ul[@class='lookup__list  visible']";
+    private static final By FIELD_PARENT_ACCOUNT  = By.xpath("//span[text()='Parent Account']");
+    private String optionLocator = "//ul[@role='presentation' and @class='lookup__list ']//following::a[@role='option']//following::div[@title='%s']";
 
 
 
@@ -98,11 +98,11 @@ public class AccountModal extends BaseModal{
     }
 
     @Step("Search parent account")
-    public void searchParentAccountName(String optionName) {
-        WebElement searchFieldToClick = driver.findElement((FIELD_PARENT_ACCOUNT));
+    public void parentAccountNameSearch(String optionName) {
+        WebElement searchFieldToClick = driver.findElement(FIELD_PARENT_ACCOUNT);
         searchFieldToClick.click();
         AllureUtils.attachScreenshot(driver);
-        WebElement optionToClick = driver.findElement(By.xpath(String.format(optionLocator, optionName)));
+        WebElement optionToClick = driver.findElement(By.xpath(String.format(optionLocator,optionName)));
         optionToClick.click();
     }
 

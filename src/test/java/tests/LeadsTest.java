@@ -1,7 +1,10 @@
 package tests;
 
+import io.qameta.allure.Description;
 import lombok.extern.log4j.Log4j2;
 import modals.LeadsModal;
+import models.Lead;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import pages.AccountsPage;
@@ -17,7 +20,6 @@ import static org.testng.Assert.assertTrue;
 @Log4j2
 public class LeadsTest extends BaseTest {
 
-    private String expectedMessage;
     HomePage homePage;
     AccountsPage accountsPage;
     LeadsPage leadsPage;
@@ -36,37 +38,46 @@ public class LeadsTest extends BaseTest {
 
     }
 
-/*I can't assert detail page because after created lead i have only message "Your lead has been converted".
-And after close this modal i see only list with leads and i don't know which lead created because i use faker */
-    @Test(description = "Create leads ",retryAnalyzer = ReTry.class , groups = {"Smoke"})
-    public void createLeads() {
-        expectedMessage = "Your lead has been converted";
+    @AfterMethod
+    public void clearCookie() {
+        driver.manage().deleteAllCookies();
+        driver.navigate().refresh();
+    }
+
+    @Test(description = "Create new lead", retryAnalyzer = ReTry.class,groups = {"Smoke"})
+    @Description("Create new lead")
+    public void createLead() {
+        Lead leadName = leadsGenerator.getLeadWithName();
         boolean isloggedIn = loginPage.open().login(USERNAME, PASSWORD).isPageOpened();
         assertTrue(isloggedIn);
         homePage.clickLeadsMenuLink()
                 .clickNewButton();
-        leadsModal.fillForm(leadsGenerator.getLeadsWithAllData()).clickSaveButton();
+        leadsModal.fillForm(leadName).clickSaveButton();
         leadsDetailsPage.clickButtonStatus();
-        leadsDetailsPage.clickConvertButton();
-        String actualMessage =leadsModal.createLeadText();
-        assertEquals(actualMessage, expectedMessage);
-
+        leadsDetailsPage.clickConvertButton()
+                .clickButtonGoToLeads();
+        String findByName = leadName.getFirstName();
+        assertEquals(leadName, findByName, "Element not found");
     }
 
-    /*Here i can't try get notification message because salesforce have trouble with loader modal window(
-    And I deleted all the leads... I don't have any more leads */
-    @Test(description = "Delete leads page", groups = {"Smoke"})
-    public void deleteLead(){
-        String leadName = "Cornelia Octavio Grant Goodwin Bednar DVM";
+
+    @Test(description = "Delete lead on page", groups = {"Smoke"})
+    @Description("Delete lead on page")
+    public void deleteLead() {
+        Lead leadName = leadsGenerator.getLeadWithName();
         boolean isLoggedIn = loginPage.open().login(USERNAME, PASSWORD).isPageOpened();
         assertTrue(isLoggedIn);
-        homePage.clickLeadsMenuLink();
-        leadsPage.deleteLeads(leadName);
+        homePage.clickLeadsMenuLink()
+                .clickNewButton();
+        leadsModal.fillForm(leadName).clickSaveButton();
+        leadsDetailsPage.clickButtonStatus();
+        leadsDetailsPage.clickConvertButton()
+                .clickButtonGoToLeads();
+        driver.navigate().refresh();
+        String findByName = leadName.getFirstName();
+        leadsPage.deleteLeads(findByName);
         leadsPage.clickDeleteButton();
-        String expectedNotificationMessage = "";
-        leadsPage.getCreatedNotificationMessage();
-        assertEquals(leadsPage.getCreatedNotificationMessage(), expectedNotificationMessage);
-        int numberOfElements =leadsPage.getVisibleLeadsName(leadName);
+        int numberOfElements = leadsPage.getVisibleLeadName(findByName);
         assertEquals(numberOfElements, 0, "Element on page");
     }
 

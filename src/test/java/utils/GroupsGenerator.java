@@ -2,13 +2,13 @@ package utils;
 
 import com.github.javafaker.Faker;
 import enums.AccessType;
-import models.Groups;
+import models.Group;
 
 public class GroupsGenerator {
 
-    public Groups getGroupsData() {
+    public Group getGroupsData() {
         Faker faker = new Faker();
-        Groups groups = Groups.builder()
+        Group groups = Group.builder()
                 .name(faker.name().firstName())
                 .description("Groups")
                 .information("information")

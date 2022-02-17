@@ -2,13 +2,13 @@ package utils;
 
 import com.github.javafaker.Faker;
 import enums.Salutation;
-import models.Contacts;
+import models.Contact;
 
 public class ContactsGenerator {
 
-    public Contacts getContactsWithAllData() {
+    public Contact getContactsWithAllData() {
         Faker faker = new Faker();
-        Contacts contacts = Contacts.builder()
+        Contact contacts = Contact.builder()
                 .salutation(Salutation.MR)
                 .firstName(faker.name().firstName())
                 .middleName(faker.name().username())
