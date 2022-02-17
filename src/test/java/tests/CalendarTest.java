@@ -9,6 +9,7 @@ import org.testng.annotations.Test;
 import pages.CalendarPage;
 import utils.CalendarGenerator;
 
+import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
 public class CalendarTest extends BaseTest {
@@ -40,11 +41,15 @@ public class CalendarTest extends BaseTest {
         boolean isloggedIn = loginPage.open().login(USERNAME, PASSWORD).isPageOpened();
         assertTrue(isloggedIn);
         homePage.clickCalendarMenuLink()
-                .clickNewEventButton();
+                .setStartDate("21");
+        calendarPage.clickNewEventButton();
+        calendarModal.setEventTime("11:45 AM");
         calendarModal.fillForm(testCalendar)
                 .clickSaveButton();
         assertTrue(calendarPage.isNotificationMessageDisplayed());
         calendarPage.setDecorationPageView("Table");
-
+        String expectedEventDate = "2/21/2022, 11:45 AM";
+        String actualEventDate = calendarPage.getCreatedEventDay();
+        assertEquals(actualEventDate,expectedEventDate);
     }
 }

@@ -3,15 +3,20 @@ package pages;
 import elements.LightningFormattedElement;
 import enums.AccountType;
 import enums.Industry;
+import io.qameta.allure.Step;
 import lombok.extern.log4j.Log4j2;
 import models.Account;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 
 @Log4j2
 public class AccountDetailsPage extends BasePage {
 
     private static final By TITLE_DETAILS = By.xpath("//li[@title='Details']");
+    private static final By LOGOUT_LINK = By.xpath("//a[contains(@class,'logout')]");
+    private static final By PROFILE_BUTTON = By.xpath("//button[contains(@class,'branding-userProfile-button')]");
+    private static final By LOGIN_BUTTON = By.id("Login");
 
     public AccountDetailsPage(WebDriver driver) {
         super(driver);
@@ -34,7 +39,7 @@ public class AccountDetailsPage extends BasePage {
         log.info(String.format("Filling form with account info: %s", account));
 
         String accountName = new LightningFormattedElement(driver, "Account Name").getText();
-        if (accountName != null) {
+        if (accountName != "") {
             account.setAccountName(accountName);
         }
 
@@ -44,22 +49,22 @@ public class AccountDetailsPage extends BasePage {
         }
 
         String parentAccount = new LightningFormattedElement(driver, "Parent Account").getText();
-        if (parentAccount != null) {
+        if (parentAccount != "") {
             account.setParentAccount(parentAccount);
         }
 
         String accountWebsite = new LightningFormattedElement(driver, "Website").getText();
-        if (accountWebsite != null) {
+        if (accountWebsite != "") {
             account.setWebsite(accountWebsite);
         }
 
         String accountPhone = new LightningFormattedElement(driver, "Phone").getText();
-        if (accountPhone != null) {
+        if (accountPhone != "") {
             account.setPhone(accountPhone);
         }
 
         String accountDescription = new LightningFormattedElement(driver, "Description").getText();
-        if (accountDescription != null) {
+        if (accountDescription != "") {
             account.setDescription(accountDescription);
         }
 
@@ -69,19 +74,26 @@ public class AccountDetailsPage extends BasePage {
         }
 
         String accountEmployees = new LightningFormattedElement(driver, "Employees").getText();
-        if (accountEmployees != null) {
+        if (accountEmployees != "") {
             account.setEmployees(accountEmployees);
         }
         String accountBillingAddress = new LightningFormattedElement(driver, "Billing Address").getText();
-        if (accountBillingAddress != null) {
+        if (accountBillingAddress != "") {
             account.setBillingAddress(accountBillingAddress);
         }
 
         String accountShippingAddress = new LightningFormattedElement(driver, "Shipping Address").getText();
-        if (accountShippingAddress != null) {
+        if (accountShippingAddress != "") {
             account.setShippingAddress(accountShippingAddress);
         }
         return account;
+
+    }
+    @Step("Log out profile")
+    public void logout(){
+        driver.findElement(PROFILE_BUTTON).click();
+        driver.findElement(LOGOUT_LINK).click();
+        wait.until(ExpectedConditions.visibilityOfElementLocated(LOGIN_BUTTON));
 
     }
 

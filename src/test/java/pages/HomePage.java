@@ -80,5 +80,6 @@ public class HomePage extends BasePage {
         log.info("Click on 'groups' link");
         jsClick(driver.findElement(GROUPS_LINK));
     }
+
 }
 

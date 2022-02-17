@@ -10,7 +10,7 @@ public class LeadsGenerator {
     public Lead getLeadWithAllData() {
         Faker faker = new Faker();
         Lead leads = Lead.builder()
-                .leadStatus(LeadStatus.NURTURING)
+                .leadStatus(LeadStatus.NEW)
                 .salutation(Salutation.MRS)
                 .firstName(faker.name().firstName())
                 .middleName(faker.name().nameWithMiddle())
@@ -35,7 +35,7 @@ public class LeadsGenerator {
     public Lead getLeadWithName() {
         Faker faker = new Faker();
         Lead lead = Lead.builder()
-                .leadStatus(LeadStatus.NURTURING)
+                .leadStatus(LeadStatus.NEW)
                 .firstName(faker.name().firstName())
                 .lastName(faker.name().lastName())
                 .company(faker.company().name())

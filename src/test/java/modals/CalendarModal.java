@@ -7,11 +7,14 @@ import lombok.extern.log4j.Log4j2;
 import models.Calendar;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 
 @Log4j2
 public class CalendarModal extends BaseModal {
 
     private final static By INPUT_LOCATION = By.xpath("//input[@class=' input']");
+    private final static By TIME_FIELD = By.xpath("//legend[text()='Start']/ancestor::lightning-datetimepicker//lightning-timepicker//input");
+    private String optionLocator = "//span[@title='%s']";
 
     public CalendarModal(WebDriver driver) {
         super(driver);
@@ -37,6 +40,13 @@ public class CalendarModal extends BaseModal {
             new TextArea(driver, "Description").write(calendar.getDescription());
         }
         return this;
+    }
+
+    public void setEventTime(String optionTime) {
+        driver.findElement(TIME_FIELD).click();
+        WebElement optionToClick = driver.findElement(By.xpath(String.format(optionLocator, optionTime)));
+        scrollIntoView(optionToClick);
+        optionToClick.click();
     }
 
 }

@@ -6,17 +6,23 @@ import lombok.extern.log4j.Log4j2;
 import modals.CalendarModal;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import utils.AllureUtils;
 
 @Log4j2
-public class CalendarPage extends BasePage{
+public class CalendarPage extends BasePage {
 
 
     private final String optionViewCalendar = "//ul[@class='scrollable']//a[@title='%s']";
     private final static By LINK_VIEW = By.xpath("//a[@title='View']");
     private final static By TITLE_CALENDAR = By.xpath("//p[text()='Calendar']");
     private final static By BUTTON_NEW_EVENT = By.xpath("//button[contains(@class,'new-event-button')]");
+    private final static By START_DATE_INPUT = By.xpath("//legend[text()='Start']/ancestor::lightning-datetimepicker//lightning-datepicker//input");
+    private final static By START_CALENDAR_BUTTON = By.xpath("//legend[text()='Start']/ancestor::lightning-datetimepicker//lightning-datepicker//button[@title='Select a date for Date']");
+    private String calendarList = "//div[contains(@class,'uiDatePickerGrid--default')]//tbody/tr[@class='calRow']//td[@data-aura-class='uiDayInMonthCell']/span[text()='%s']";
+    private String eventDayOnList = "//th/ancestor::tbody//th//span[contains(text(),'%s')]";
+
 
     public CalendarPage(WebDriver driver) {
         super(driver);
@@ -32,6 +38,20 @@ public class CalendarPage extends BasePage{
         driver.get(BASE_URL + "/lightning/o/Event/home");
         return this;
     }
+
+    @Step("Set start date event")
+    public void setStartDate(String setDay) {
+        WebElement dayToClick = driver.findElement(By.xpath(String.format(calendarList, setDay)));
+        wait.until(ExpectedConditions.elementToBeClickable(dayToClick));
+        dayToClick.click();
+
+    }
+
+    @Step("Get start date event on list psge")
+    public String getCreatedEventDay() {
+        return driver.findElement(By.xpath(String.format(eventDayOnList))).getText();
+    }
+
 
     @Step("Click 'new event' button on calendar page")
     public CalendarModal clickNewEventButton() {
@@ -50,4 +70,5 @@ public class CalendarPage extends BasePage{
         wait.until(ExpectedConditions.visibilityOfElementLocated(BUTTON_NEW_EVENT));
 
     }
+
 }

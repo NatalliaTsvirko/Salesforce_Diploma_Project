@@ -23,6 +23,9 @@ public class LeadsDetailsPage extends BasePage {
     private static final By INPUT_ACCOUNT_NAME = By.xpath("//span[text()='Account Name']");
     private static final By BUTTON_GO_TO_LEADS = By.xpath("//button[@type='button' and text()='Go to Leads']");
     private static final By NEW_BUTTON = By.cssSelector("a[title=New]");
+    private static final By LEAD_STATUS = By.xpath("//span[text()='Lead Status']/ancestor::records-record-layout-item/div//lightning-formatted-text");
+    private static final By DETAILS_TAB = By.xpath("//a[@data-label='Details']");
+    private static final By MESSAGE_CONVERT_LEAD = By.xpath("//span[@class='uiOutputText' and text()='Your lead has been converted']");
 
     public LeadsDetailsPage(WebDriver driver) {
         super(driver);
@@ -138,6 +141,26 @@ public class LeadsDetailsPage extends BasePage {
         driver.findElement(BUTTON_GO_TO_LEADS).click();
         wait.until(ExpectedConditions.visibilityOfElementLocated(NEW_BUTTON));
         return this;
+    }
+
+    @Step("Get lead Status information")
+    public String getLeadStatus() {
+        log.info("click on button 'Go to Leads'");
+       return driver.findElement(LEAD_STATUS).getText();
+    }
+
+    @Step("Open detail tab after created lead ")
+    public void openDetailsTab() {
+        log.info("open details lead table");
+        driver.findElement(DETAILS_TAB).click();
+
+    }
+
+    @Step("Open detail tab after created lead ")
+    public boolean getMessageConvertLead() {
+        log.info("open details lead table");
+       return driver.findElement(MESSAGE_CONVERT_LEAD).isDisplayed();
+
     }
 }
 

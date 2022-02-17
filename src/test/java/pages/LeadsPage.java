@@ -14,7 +14,7 @@ public class LeadsPage extends BasePage {
     private static final By DELETE_OPTION = By.xpath("//ul[@class='scrollable']//a[@title='Delete']");
     private static final By NEW_BUTTON = By.cssSelector("a[title=New]");
     private static final By DELETE_BUTTON = By.xpath("//button[@title='Delete']");
-    private static final By DETAILS_TAB = By.xpath("//div[contains(@class,'active')]//*[@id='detailTab__item']");
+    private static final By OPPORTUNITY_MENU_LINK = By.xpath("//*[@title='Opportunity']");
 
 
     public LeadsPage(WebDriver driver) {
@@ -32,12 +32,7 @@ public class LeadsPage extends BasePage {
         return this;
     }
 
-    @Step("Open detail tab after created lead ")
-    public LeadsDetailsPage openDetailsTab() {
-        log.info("open details lead table");
-        driver.findElement(DETAILS_TAB).click();
-        return new LeadsDetailsPage(driver);
-    }
+
 
     @Step("Delete leads from list")
     public void deleteLeads(String nameLead) {
@@ -58,6 +53,12 @@ public class LeadsPage extends BasePage {
         return numberOfElements;
     }
 
+    @Step("Click Opportunity menu link")
+    public void clickOpportunityMenuLink() {
+        log.info("open Opportunity page");
+        jsClick(driver.findElement(OPPORTUNITY_MENU_LINK));
+
+    }
 
 }
 

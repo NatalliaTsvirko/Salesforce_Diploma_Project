@@ -53,9 +53,22 @@ public class LeadsTest extends BaseTest {
         homePage.clickLeadsMenuLink()
                 .clickNewButton();
         leadsModal.fillForm(leadName).clickSaveButton();
+        assertTrue(leadsDetailsPage.isNotificationMessageDisplayed());
+        leadsDetailsPage.openDetailsTab();
+        String expectedStatusNew = "New";
+        assertEquals(leadsDetailsPage.getLeadStatus(),expectedStatusNew);
         leadsDetailsPage.clickButtonStatus();
-        leadsDetailsPage.clickConvertButton()
-                .clickButtonGoToLeads();
+        assertTrue(leadsDetailsPage.isNotificationMessageDisplayed());
+        String expectedStatusWorking = "Working";
+        assertEquals(leadsDetailsPage.getLeadStatus(),expectedStatusWorking);
+        leadsDetailsPage.clickButtonStatus();
+        assertTrue(leadsDetailsPage.isNotificationMessageDisplayed());
+        String expectedStatusNurturing = "Nurturing";
+        assertEquals(leadsDetailsPage.getLeadStatus(),expectedStatusNurturing);
+        leadsDetailsPage.clickConvertButton();
+        assertTrue(leadsDetailsPage.getMessageConvertLead());
+        leadsDetailsPage.clickButtonGoToLeads();
+        leadsPage.clickOpportunityMenuLink();
         String findByName = leadName.getFirstName();
         assertEquals(leadName, findByName, "Element not found");
     }
