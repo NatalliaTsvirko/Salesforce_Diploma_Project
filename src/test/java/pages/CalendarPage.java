@@ -13,16 +13,12 @@ import utils.AllureUtils;
 @Log4j2
 public class CalendarPage extends BasePage {
 
-
-    private final String optionViewCalendar = "//ul[@class='scrollable']//a[@title='%s']";
+    private String optionViewCalendar = "//ul[@class='scrollable']//a[@title='%s']";
+    private String calendarList = "//div[contains(@class,'uiDatePickerGrid--default')]//tbody/tr[@class='calRow']//td[@data-aura-class='uiDayInMonthCell']/span[text()='%s']";
+    private String eventDayOnList = "//th/ancestor::tbody//th//span[contains(text(),'%s')]";
     private final static By LINK_VIEW = By.xpath("//a[@title='View']");
     private final static By TITLE_CALENDAR = By.xpath("//p[text()='Calendar']");
     private final static By BUTTON_NEW_EVENT = By.xpath("//button[contains(@class,'new-event-button')]");
-    private final static By START_DATE_INPUT = By.xpath("//legend[text()='Start']/ancestor::lightning-datetimepicker//lightning-datepicker//input");
-    private final static By START_CALENDAR_BUTTON = By.xpath("//legend[text()='Start']/ancestor::lightning-datetimepicker//lightning-datepicker//button[@title='Select a date for Date']");
-    private String calendarList = "//div[contains(@class,'uiDatePickerGrid--default')]//tbody/tr[@class='calRow']//td[@data-aura-class='uiDayInMonthCell']/span[text()='%s']";
-    private String eventDayOnList = "//th/ancestor::tbody//th//span[contains(text(),'%s')]";
-
 
     public CalendarPage(WebDriver driver) {
         super(driver);
@@ -48,10 +44,11 @@ public class CalendarPage extends BasePage {
     }
 
     @Step("Get start date event on list psge")
-    public String getCreatedEventDay() {
-        return driver.findElement(By.xpath(String.format(eventDayOnList))).getText();
-    }
+    public int getCreatedEventDay(String eventDay) {
+        int numberOfElements = driver.findElements(By.xpath(String.format(eventDayOnList, eventDay))).size();
+        return numberOfElements;
 
+    }
 
     @Step("Click 'new event' button on calendar page")
     public CalendarModal clickNewEventButton() {
@@ -59,6 +56,7 @@ public class CalendarPage extends BasePage {
         wait.until(ExpectedConditions.elementToBeClickable(BUTTON_NEW_EVENT));
         jsClick(driver.findElement(BUTTON_NEW_EVENT));
         return new CalendarModal(driver);
+
     }
 
     @Step("Select view decoration page")
@@ -67,8 +65,6 @@ public class CalendarPage extends BasePage {
         jsClick(driver.findElement(LINK_VIEW));
         AllureUtils.attachScreenshot(driver);
         driver.findElement(By.xpath(String.format(optionViewCalendar, optionName))).click();
-        wait.until(ExpectedConditions.visibilityOfElementLocated(BUTTON_NEW_EVENT));
 
     }
-
 }

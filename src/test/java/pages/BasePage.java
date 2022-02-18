@@ -3,6 +3,7 @@ package pages;
 import io.qameta.allure.Step;
 import lombok.extern.log4j.Log4j2;
 import org.openqa.selenium.*;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import utils.PropertyReader;
 
@@ -41,6 +42,7 @@ public abstract class BasePage {
     @Step("Verify notification message ")
     public boolean isNotificationMessageDisplayed() {
         log.info("wait notification message ");
+        wait.until(ExpectedConditions.visibilityOfElementLocated(SUCCESS_MESSAGE));
         return driver.findElement(SUCCESS_MESSAGE).isDisplayed();
 
     }

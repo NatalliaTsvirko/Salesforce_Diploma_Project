@@ -44,9 +44,12 @@ public class LeadsTest extends BaseTest {
         driver.navigate().refresh();
     }
 
-    @Test(description = "Create new lead", retryAnalyzer = ReTry.class,groups = {"Smoke"})
-    @Description("Create new lead")
-    public void createLead() {
+    @Test(description = "Create new lead", groups = {"Smoke"})
+    @Description("Create new lead with status 'New'")
+    public void createLeadStatusNew() {
+        String expectedStatusNew = "New";
+        String expectedStatusWorking = "Working";
+        String expectedStatusNurturing = "Nurturing";
         Lead leadName = leadsGenerator.getLeadWithName();
         boolean isloggedIn = loginPage.open().login(USERNAME, PASSWORD).isPageOpened();
         assertTrue(isloggedIn);
@@ -55,44 +58,73 @@ public class LeadsTest extends BaseTest {
         leadsModal.fillForm(leadName).clickSaveButton();
         assertTrue(leadsDetailsPage.isNotificationMessageDisplayed());
         leadsDetailsPage.openDetailsTab();
-        String expectedStatusNew = "New";
-        assertEquals(leadsDetailsPage.getLeadStatus(),expectedStatusNew);
+        assertEquals(leadsDetailsPage.getLeadStatus(), expectedStatusNew);
         leadsDetailsPage.clickButtonStatus();
         assertTrue(leadsDetailsPage.isNotificationMessageDisplayed());
-        String expectedStatusWorking = "Working";
-        assertEquals(leadsDetailsPage.getLeadStatus(),expectedStatusWorking);
+        assertEquals(leadsDetailsPage.getLeadStatus(), expectedStatusWorking);
         leadsDetailsPage.clickButtonStatus();
         assertTrue(leadsDetailsPage.isNotificationMessageDisplayed());
-        String expectedStatusNurturing = "Nurturing";
-        assertEquals(leadsDetailsPage.getLeadStatus(),expectedStatusNurturing);
+        assertEquals(leadsDetailsPage.getLeadStatus(), expectedStatusNurturing);
+        leadsDetailsPage.clickButtonStatus();
         leadsDetailsPage.clickConvertButton();
         assertTrue(leadsDetailsPage.getMessageConvertLead());
         leadsDetailsPage.clickButtonGoToLeads();
         leadsPage.clickOpportunityMenuLink();
-        String findByName = leadName.getFirstName();
-        assertEquals(leadName, findByName, "Element not found");
+        String findByName = leadName.getCompany();
+        int numberOfElements = leadsPage.getVisibleLeadName(findByName);
+        assertEquals(numberOfElements, 1, "Element not found");
+    }
+
+
+    @Test(description = "Create new lead", groups = {"Smoke"})
+    @Description("Create new lead with status 'Nurturing'")
+    public void createLead() {
+        String expectedStatusNurturing = "Nurturing";
+        Lead leadName = leadsGenerator.getLeadWithNurturingStatus();
+        boolean isloggedIn = loginPage.open().login(USERNAME, PASSWORD).isPageOpened();
+        assertTrue(isloggedIn);
+        homePage.clickLeadsMenuLink()
+                .clickNewButton();
+        leadsModal.fillForm(leadName).clickSaveButton();
+        assertTrue(leadsDetailsPage.isNotificationMessageDisplayed());
+        leadsDetailsPage.openDetailsTab();
+        assertEquals(leadsDetailsPage.getLeadStatus(), expectedStatusNurturing);
+        leadsDetailsPage.clickButtonStatus();
+        leadsDetailsPage.clickConvertButton();
+        assertTrue(leadsDetailsPage.getMessageConvertLead());
+        leadsDetailsPage.clickButtonGoToLeads();
+        leadsPage.clickOpportunityMenuLink();
+        String findByName = leadName.getCompany();
+        int numberOfElements = leadsPage.getVisibleLeadName(findByName);
+        assertEquals(numberOfElements, 1, "Element not found");
+
     }
 
 
     @Test(description = "Delete lead on page", groups = {"Smoke"})
     @Description("Delete lead on page")
     public void deleteLead() {
-        Lead leadName = leadsGenerator.getLeadWithName();
+        String expectedStatusNurturing = "Nurturing";
+        Lead leadName = leadsGenerator.getLeadWithNurturingStatus();
         boolean isLoggedIn = loginPage.open().login(USERNAME, PASSWORD).isPageOpened();
         assertTrue(isLoggedIn);
         homePage.clickLeadsMenuLink()
                 .clickNewButton();
         leadsModal.fillForm(leadName).clickSaveButton();
+        assertTrue(leadsDetailsPage.isNotificationMessageDisplayed());
+        leadsDetailsPage.openDetailsTab();
+        assertEquals(leadsDetailsPage.getLeadStatus(), expectedStatusNurturing);
         leadsDetailsPage.clickButtonStatus();
-        leadsDetailsPage.clickConvertButton()
-                .clickButtonGoToLeads();
-        driver.navigate().refresh();
-        String findByName = leadName.getFirstName();
-        leadsPage.deleteLeads(findByName);
+        leadsDetailsPage.clickConvertButton();
+        assertTrue(leadsDetailsPage.getMessageConvertLead());
+        leadsDetailsPage.clickButtonGoToLeads();
+        leadsPage.clickOpportunityMenuLink();
+        String findByNameCompany = leadName.getCompany();
+        leadsPage.deleteLeads(findByNameCompany);
         leadsPage.clickDeleteButton();
-        int numberOfElements = leadsPage.getVisibleLeadName(findByName);
+        int numberOfElements = leadsPage.getVisibleLeadName(findByNameCompany);
         assertEquals(numberOfElements, 0, "Element on page");
-    }
 
+    }
 }
 

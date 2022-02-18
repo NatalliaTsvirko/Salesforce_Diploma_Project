@@ -42,4 +42,15 @@ public class LeadsGenerator {
                 .build();
         return lead;
     }
+
+    public Lead getLeadWithNurturingStatus() {
+        Faker faker = new Faker();
+        Lead lead = Lead.builder()
+                .leadStatus(LeadStatus.NURTURING)
+                .firstName(faker.name().firstName())
+                .lastName(faker.name().lastName())
+                .company(faker.company().name())
+                .build();
+        return lead;
+    }
 }

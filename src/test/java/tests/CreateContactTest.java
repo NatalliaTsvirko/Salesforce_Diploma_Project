@@ -63,7 +63,7 @@ public class CreateContactTest extends BaseTest {
         boolean isloggedIn = loginPage.open().login(USERNAME, PASSWORD).isPageOpened();
         assertTrue(isloggedIn);
         homePage.clickContactsMenuLink();
-        contactsPage.setContactCheckbox("Asa Hintz");
+        contactsPage.setContactCheckbox("Bernardina Gerlach");
         contactsPage.clickButtonSendEmail();
         contactsPage.fillFormSendList("Hello","All cool");
         assertTrue(contactsPage.isNotificationMessageDisplayed());

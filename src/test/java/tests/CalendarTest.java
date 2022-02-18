@@ -34,8 +34,8 @@ public class CalendarTest extends BaseTest {
     }
 
 
-    @Test(description = "Create calendar event and verify notification message", groups = {"Regression"})
-    @Description("Create calendar event and verify notification message")
+    @Test(description = "Create calendar event ", groups = {"Regression"})
+    @Description("Create calendar event ")
     public void createNewEvent() {
         Calendar testCalendar = calendarGenerator.getCalendarData();
         boolean isloggedIn = loginPage.open().login(USERNAME, PASSWORD).isPageOpened();
@@ -43,13 +43,14 @@ public class CalendarTest extends BaseTest {
         homePage.clickCalendarMenuLink()
                 .setStartDate("21");
         calendarPage.clickNewEventButton();
-        calendarModal.setEventTime("11:45 AM");
+        calendarModal.setEventTime("12:00 AM");
         calendarModal.fillForm(testCalendar)
                 .clickSaveButton();
         assertTrue(calendarPage.isNotificationMessageDisplayed());
         calendarPage.setDecorationPageView("Table");
-        String expectedEventDate = "2/21/2022, 11:45 AM";
-        String actualEventDate = calendarPage.getCreatedEventDay();
-        assertEquals(actualEventDate,expectedEventDate);
+        String expectedEventDate = "2/21/2022, 12:00 AM";
+        int numberOfElements = calendarPage.getCreatedEventDay(expectedEventDate);
+        assertEquals(numberOfElements, 1, "Element on page");
+
     }
 }

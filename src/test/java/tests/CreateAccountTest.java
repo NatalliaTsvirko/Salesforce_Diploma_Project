@@ -30,21 +30,26 @@ public class CreateAccountTest extends BaseTest {
         accountsGenerator = new AccountsGenerator();
     }
 
-    @AfterMethod
-    public void clearCookie() {
-        driver.manage().deleteAllCookies();
+    @BeforeMethod(alwaysRun = true)
+    public void login() {
+        loginPage.open().login(USERNAME, PASSWORD);
 
+    }
+
+    @AfterMethod(alwaysRun = true)
+    public void clearCookie() {
+        homePage.logOut();
+        driver.manage().deleteAllCookies();
+        driver.navigate().refresh();
 
     }
 
     @Test(description = "Create account with all data", dataProvider = "Create account with different data", groups = {"Smoke"})
     @Description("Create account with all data")
     public void createAccount(Account testAccount) {
-        boolean isloggedIn = loginPage.open().login(USERNAME, PASSWORD).isPageOpened();
-        assertTrue(isloggedIn);
         homePage.clickAccountMenuLink()
                 .clickNewButton();
-        accountModal.parentAccountNameSearch("Meaghan");
+        accountModal.parentAccountNameSearch("Jospeh");
         accountModal.fillForm(testAccount).clickSaveButton();
         assertTrue(accountsPage.isNotificationMessageDisplayed());
         Account actualAccountDetailsInfo = accountsPage.openDetailsTab()
@@ -57,7 +62,7 @@ public class CreateAccountTest extends BaseTest {
     public Object[][] getAccountData() {
         return new Object[][]{
                 {accountsGenerator.getAccountWithAllData()},
-                {accountsGenerator.getWithAccountName()},
+                {accountsGenerator.getWithAccountName()}
         };
     }
 
@@ -67,8 +72,9 @@ public class CreateAccountTest extends BaseTest {
         boolean isloggedIn = loginPage.open().login(USERNAME, PASSWORD).isPageOpened();
         assertTrue(isloggedIn);
         homePage.clickAccountMenuLink();
-        accountsPage.setAccountName("Huels Inc");
-        String expectedName = "Huels Inc";
+        accountsPage.setAccountName("Runolfsson, Schiller and Bailey");
+        String expectedName = "Runolfsson, Schiller and Bailey";
         assertEquals(accountsPage.getAccountName(), expectedName);
+
     }
 }

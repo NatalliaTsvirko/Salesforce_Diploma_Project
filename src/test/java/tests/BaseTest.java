@@ -33,9 +33,7 @@ public class BaseTest {
         loginPage = new LoginPage(driver);
         homePage = new HomePage(driver);
 
-
     }
-
 
     @AfterClass(alwaysRun = true)
     @Step("Close browser")

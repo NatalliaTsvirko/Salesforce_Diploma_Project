@@ -81,5 +81,12 @@ public class HomePage extends BasePage {
         jsClick(driver.findElement(GROUPS_LINK));
     }
 
+    @Step("Click on File link")
+    public void logOut() {
+        log.info("Click on 'groups' link");
+        driver.findElement(PROFILE_BUTTON).click();
+        driver.findElement(LOGOUT_LINK).click();
+    }
+
 }
 

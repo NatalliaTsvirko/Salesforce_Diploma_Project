@@ -24,8 +24,7 @@ public class LeadsDetailsPage extends BasePage {
     private static final By BUTTON_GO_TO_LEADS = By.xpath("//button[@type='button' and text()='Go to Leads']");
     private static final By NEW_BUTTON = By.cssSelector("a[title=New]");
     private static final By LEAD_STATUS = By.xpath("//span[text()='Lead Status']/ancestor::records-record-layout-item/div//lightning-formatted-text");
-    private static final By DETAILS_TAB = By.xpath("//a[@data-label='Details']");
-    private static final By MESSAGE_CONVERT_LEAD = By.xpath("//span[@class='uiOutputText' and text()='Your lead has been converted']");
+    private static final By DETAILS_TAB = By.xpath("//a[@data-tab-value='detailTab']");
 
     public LeadsDetailsPage(WebDriver driver) {
         super(driver);
@@ -56,27 +55,27 @@ public class LeadsDetailsPage extends BasePage {
 
 
         String leadsName = new LightningFormattedElement(driver, "Name").getText();
-        if (leadsName != "" ) {
+        if (leadsName != "") {
             leads.setLastName(leadsName);
         }
 
         String leadsTitle = new LightningFormattedElement(driver, "Titel").getText();
-        if (leadsTitle != "" ) {
+        if (leadsTitle != "") {
             leads.setTitle(leadsTitle);
         }
 
         String leadsEmail = new LightningFormattedElement(driver, "Email").getText();
-        if (leadsEmail != "" ) {
+        if (leadsEmail != "") {
             leads.setEmail(leadsEmail);
         }
 
         String leadsPhone = new LightningFormattedElement(driver, "Phone").getText();
-        if (leadsPhone != "" ) {
+        if (leadsPhone != "") {
             leads.setPhone(leadsPhone);
         }
 
         String leadsMobile = new LightningFormattedElement(driver, "Mobile").getText();
-        if (leadsMobile != "" ) {
+        if (leadsMobile != "") {
             leads.setMobile(leadsMobile);
         }
 
@@ -86,12 +85,12 @@ public class LeadsDetailsPage extends BasePage {
         }
 
         String leadsWebsite = new LightningFormattedElement(driver, "Website").getText();
-        if (leadsWebsite != "" ) {
+        if (leadsWebsite != "") {
             leads.setWebsite(leadsWebsite);
         }
 
         String leadsCompany = new LightningFormattedElement(driver, "Company").getText();
-        if (leadsCompany != "" ) {
+        if (leadsCompany != "") {
             leads.setCompany(leadsCompany);
         }
 
@@ -111,7 +110,7 @@ public class LeadsDetailsPage extends BasePage {
         }
 
         String leadsAddress = new LightningFormattedElement(driver, "Address").getText();
-        if (leadsAddress != "" ) {
+        if (leadsAddress != "") {
             leads.setSearchAddress(leadsAddress);
         }
 
@@ -124,15 +123,15 @@ public class LeadsDetailsPage extends BasePage {
         log.info("clicking button status complete");
         wait.until(ExpectedConditions.elementToBeClickable(BUTTON_STATUS_COMPLETE));
         jsClick(driver.findElement(BUTTON_STATUS_COMPLETE));
+
     }
 
     @Step("Click button 'convert'")
-    public LeadsDetailsPage clickConvertButton() {
+    public void clickConvertButton() {
         log.info("click convert button on leads modal");
         wait.until(ExpectedConditions.visibilityOfElementLocated(INPUT_ACCOUNT_NAME));
         driver.findElement(BUTTON_CONVERT).click();
-        wait.until(ExpectedConditions.visibilityOfElementLocated(CREATED_LEADS_MESSAGE));
-        return this;
+
     }
 
     @Step("Click button 'Go to Leads'")
@@ -145,21 +144,24 @@ public class LeadsDetailsPage extends BasePage {
 
     @Step("Get lead Status information")
     public String getLeadStatus() {
-        log.info("click on button 'Go to Leads'");
-       return driver.findElement(LEAD_STATUS).getText();
+        log.info("Get lead Status information");
+        wait.until(ExpectedConditions.visibilityOfElementLocated(LEAD_STATUS));
+        return driver.findElement(LEAD_STATUS).getText();
     }
 
     @Step("Open detail tab after created lead ")
     public void openDetailsTab() {
         log.info("open details lead table");
+        wait.until(ExpectedConditions.visibilityOfElementLocated(DETAILS_TAB));
         driver.findElement(DETAILS_TAB).click();
 
     }
 
-    @Step("Open detail tab after created lead ")
+    @Step("Get message about lead is convert")
     public boolean getMessageConvertLead() {
-        log.info("open details lead table");
-       return driver.findElement(MESSAGE_CONVERT_LEAD).isDisplayed();
+        log.info("Get message about lead is convert");
+        wait.until(ExpectedConditions.visibilityOfElementLocated(CREATED_LEADS_MESSAGE));
+        return driver.findElement(CREATED_LEADS_MESSAGE).isDisplayed();
 
     }
 }
