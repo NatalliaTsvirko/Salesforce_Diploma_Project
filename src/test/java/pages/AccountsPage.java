@@ -46,7 +46,7 @@ public class AccountsPage extends BasePage {
         actions.moveToElement(driver.findElement(SEARCH_FIELD))
                 .click()
                 .sendKeys(accountName, Keys.ENTER)
-                .pause(3)
+                .pause(5)
                 .build()
                 .perform();
     }
@@ -58,6 +58,5 @@ public class AccountsPage extends BasePage {
         return driver.findElement(FIND_ACCOUNT_NAME).getText();
 
     }
-
 }
 

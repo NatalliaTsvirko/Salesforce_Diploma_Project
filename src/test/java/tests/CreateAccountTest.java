@@ -28,18 +28,12 @@ public class CreateAccountTest extends BaseTest {
         accountDetailsPage = new AccountDetailsPage(driver);
         accountModal = new AccountModal(driver);
         accountsGenerator = new AccountsGenerator();
-    }
-
-    @BeforeMethod(alwaysRun = true)
-    public void login() {
-        loginPage.open().login(USERNAME, PASSWORD);
 
     }
 
     @AfterMethod(alwaysRun = true)
     public void clearCookie() {
-        homePage.logOut();
-        driver.manage().deleteAllCookies();
+        accountDetailsPage.clickHomeLink();
         driver.navigate().refresh();
 
     }
@@ -49,7 +43,7 @@ public class CreateAccountTest extends BaseTest {
     public void createAccount(Account testAccount) {
         homePage.clickAccountMenuLink()
                 .clickNewButton();
-        accountModal.parentAccountNameSearch("Jospeh");
+        accountModal.parentAccountNameSearch("Tristan");
         accountModal.fillForm(testAccount).clickSaveButton();
         assertTrue(accountsPage.isNotificationMessageDisplayed());
         Account actualAccountDetailsInfo = accountsPage.openDetailsTab()
@@ -72,8 +66,8 @@ public class CreateAccountTest extends BaseTest {
         boolean isloggedIn = loginPage.open().login(USERNAME, PASSWORD).isPageOpened();
         assertTrue(isloggedIn);
         homePage.clickAccountMenuLink();
-        accountsPage.setAccountName("Runolfsson, Schiller and Bailey");
-        String expectedName = "Runolfsson, Schiller and Bailey";
+        accountsPage.setAccountName("Chin");
+        String expectedName = "Chin";
         assertEquals(accountsPage.getAccountName(), expectedName);
 
     }

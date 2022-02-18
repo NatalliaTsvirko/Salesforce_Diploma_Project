@@ -33,6 +33,7 @@ public class HomePage extends BasePage {
         return this;
     }
 
+
     @Step("Click account menu link")
     public AccountsPage clickAccountMenuLink() {
         log.info("open account page");
@@ -79,14 +80,7 @@ public class HomePage extends BasePage {
     public void clickGroupsLink() {
         log.info("Click on 'groups' link");
         jsClick(driver.findElement(GROUPS_LINK));
-    }
 
-    @Step("Click on File link")
-    public void logOut() {
-        log.info("Click on 'groups' link");
-        driver.findElement(PROFILE_BUTTON).click();
-        driver.findElement(LOGOUT_LINK).click();
     }
-
 }
 

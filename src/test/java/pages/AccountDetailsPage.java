@@ -8,15 +8,12 @@ import lombok.extern.log4j.Log4j2;
 import models.Account;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 
 @Log4j2
 public class AccountDetailsPage extends BasePage {
 
     private static final By TITLE_DETAILS = By.xpath("//li[@title='Details']");
-    private static final By LOGOUT_LINK = By.xpath("//a[contains(@class,'logout')]");
-    private static final By PROFILE_BUTTON = By.xpath("//button[contains(@class,'branding-userProfile-button')]");
-    private static final By LOGIN_BUTTON = By.id("Login");
+    private static final By HOME_LINK = By.xpath("//a[@title='Home']");
 
     public AccountDetailsPage(WebDriver driver) {
         super(driver);
@@ -89,12 +86,11 @@ public class AccountDetailsPage extends BasePage {
         return account;
 
     }
-    @Step("Log out profile")
-    public void logout(){
-        driver.findElement(PROFILE_BUTTON).click();
-        driver.findElement(LOGOUT_LINK).click();
-        wait.until(ExpectedConditions.visibilityOfElementLocated(LOGIN_BUTTON));
+
+    @Step("Click home link")
+    public void clickHomeLink() {
+        log.info("open home page");
+        jsClick(driver.findElement(HOME_LINK));
 
     }
-
 }
