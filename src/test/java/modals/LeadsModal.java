@@ -1,7 +1,6 @@
 package modals;
 
 import elements.Dropdown;
-import io.qameta.allure.Step;
 import lombok.extern.log4j.Log4j2;
 import models.Lead;
 import org.openqa.selenium.By;
@@ -27,7 +26,6 @@ public class LeadsModal extends BaseModal {
     private static final By PROVINCE = By.xpath("//input[@name='province']");
     private static final By POSTAL_CODE = By.xpath("//input[@name='postalCode']");
     private static final By COUNTRY = By.xpath("//input[@name='country']");
-    private static final By CREATE_LEAD_MESSAGE = By.xpath("//span[text()='Your lead has been converted']");
 
     public LeadsModal(WebDriver driver) {
         super(driver);
@@ -35,7 +33,7 @@ public class LeadsModal extends BaseModal {
 
     public LeadsModal fillForm(Lead lead) {
 
-        log.info(String.format("Filling form with account info: %s", lead));
+        log.info(String.format("Filling form with lead info: %s", lead));
 
         if (lead.getLeadStatus() != null) {
             new Dropdown(driver, "Lead Status").selectOption(lead.getLeadStatus().getName());
@@ -118,10 +116,4 @@ public class LeadsModal extends BaseModal {
         }
         return this;
     }
-
-    @Step("Get text ")
-    public String createLeadText() {
-        return driver.findElement(CREATE_LEAD_MESSAGE).getText();
-    }
-
 }

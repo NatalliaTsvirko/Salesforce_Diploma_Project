@@ -19,6 +19,7 @@ public class GroupsTest extends BaseTest {
     GroupsGenerator groupsGenerator;
     GroupsModal groupsModal;
     GroupDetailsPage groupDetailsPage;
+    private String filePath = "src/test/resources/spongebob.jpg";
 
     @BeforeClass
     public void initializePages() {
@@ -34,7 +35,7 @@ public class GroupsTest extends BaseTest {
         driver.navigate().refresh();
     }
 
-    @Test(description = "Create new group",retryAnalyzer = ReTry.class,groups = {"Smoke"})
+    @Test(description = "Create new group", retryAnalyzer = ReTry.class, groups = {"Smoke"})
     @Description("Create new group")
     public void createGroups() {
         Group testGroups = groupsGenerator.getGroupsData();
@@ -44,7 +45,7 @@ public class GroupsTest extends BaseTest {
         groupsPage.clickNewButton();
         groupsModal.fillForm(testGroups)
                 .clickOnSaveButton();
-        groupsModal.chooseFile();
+        groupsModal.chooseFile(filePath);
         groupDetailsPage.isPageOpened();
         Group actualGroupDetailsInfo = groupDetailsPage.getGroupsDetailsInfo();
         assertEquals(actualGroupDetailsInfo, testGroups, "Account details don't match test account data");

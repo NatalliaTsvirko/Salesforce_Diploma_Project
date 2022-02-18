@@ -1,6 +1,6 @@
 # Salesforce_Diploma_Project
 
-#libraries used in the project:
+# libraries used in the project:
 
 -selenium version 3.141.59;
 
@@ -10,14 +10,16 @@
 
 -java faker version 1.0.2;
 
-#CI
+# CI
+
 -Jenkins;
 
-#Report
+# Report
 
 -Allure-report;
 
-#Operation commands:
+# Operation commands:
+
 In order to run tests, use the command:
 
 -mvn clean test -DsuiteXmlFile=src/test/resources/ParallelTests.xml

@@ -5,7 +5,10 @@ import io.qameta.allure.Description;
 import lombok.extern.log4j.Log4j2;
 import modals.AccountModal;
 import models.Account;
-import org.testng.annotations.*;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.DataProvider;
+import org.testng.annotations.Test;
 import pages.AccountDetailsPage;
 import pages.AccountsPage;
 import utils.AccountsGenerator;
@@ -65,10 +68,15 @@ public class CreateAccountTest extends BaseTest {
     public void searchAccount() {
         boolean isloggedIn = loginPage.open().login(USERNAME, PASSWORD).isPageOpened();
         assertTrue(isloggedIn);
-        homePage.clickAccountMenuLink();
-        accountsPage.setAccountName("Chin");
-        String expectedName = "Chin";
-        assertEquals(accountsPage.getAccountName(), expectedName);
+        homePage.clickAccountMenuLink()
+                .clickNewButton();
+        Account testName = accountsGenerator.getWithAccountName();
+        accountModal.fillForm(testName).clickSaveButton();
+        assertTrue(accountsPage.isNotificationMessageDisplayed());
+        accountDetailsPage.clickAccountMenuLink();
+        accountsPage.setAccountName(testName.getAccountName());
+        String expectedName = testName.getAccountName();
+        assertEquals(accountsPage.getAccountNameOnList(), expectedName);
 
     }
 }

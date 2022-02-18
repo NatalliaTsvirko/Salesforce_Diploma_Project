@@ -12,11 +12,10 @@ import org.openqa.selenium.WebElement;
 import utils.AllureUtils;
 
 @Log4j2
-public class AccountModal extends BaseModal{
+public class AccountModal extends BaseModal {
 
-    private static final By FIELD_PARENT_ACCOUNT  = By.xpath("//span[text()='Parent Account']");
+    private static final By FIELD_PARENT_ACCOUNT = By.xpath("//span[text()='Parent Account']");
     private String optionLocator = "//ul[@role='presentation' and @class='lookup__list ']//following::a[@role='option']//following::div[@title='%s']";
-
 
 
     public AccountModal(WebDriver driver) {
@@ -25,73 +24,73 @@ public class AccountModal extends BaseModal{
 
     public AccountModal fillForm(Account account) {
 
-        log.info(String.format("Filling form with account info: %s",account));
+        log.info(String.format("Filling form with account info: %s", account));
 
-        if(account.getAccountName()!= null){
+        if (account.getAccountName() != null) {
             new Input(driver, "Account Name").write(account.getAccountName());
         }
 
-        if(account.getType()!= null){
+        if (account.getType() != null) {
             new DropdownAccount(driver, "Type").selectOption(account.getType().getName());
         }
 
-        if(account.getWebsite()!= null){
+        if (account.getWebsite() != null) {
             new Input(driver, "Website").write(account.getWebsite());
         }
 
-        if(account.getDescription()!=null){
+        if (account.getDescription() != null) {
             new TextArea(driver, "Description").write(account.getDescription());
         }
 
-        if(account.getPhone()!= null){
+        if (account.getPhone() != null) {
             new Input(driver, "Phone").write(account.getPhone());
         }
 
-        if(account.getIndustry()!= null){
+        if (account.getIndustry() != null) {
             new DropdownAccount(driver, "Industry").selectOption(account.getIndustry().getName());
         }
 
-        if(account.getEmployees()!= null){
+        if (account.getEmployees() != null) {
             new Input(driver, "Employees").write(account.getEmployees());
         }
 
-        if(account.getBillingStreet()!= null){
+        if (account.getBillingStreet() != null) {
             new TextArea(driver, "Billing Street").write(account.getBillingStreet());
         }
 
-        if(account.getShippingStreet()!= null){
+        if (account.getShippingStreet() != null) {
             new TextArea(driver, "Shipping Street").write(account.getShippingStreet());
         }
 
-        if(account.getBillingCity()!= null){
+        if (account.getBillingCity() != null) {
             new Input(driver, "Billing City").write(account.getBillingCity());
         }
 
-        if(account.getShippingCity()!= null){
+        if (account.getShippingCity() != null) {
             new Input(driver, "Shipping City").write(account.getShippingCity());
         }
 
-        if(account.getBillingStateProvince()!= null){
+        if (account.getBillingStateProvince() != null) {
             new Input(driver, "Billing State/Province").write(account.getBillingStateProvince());
         }
 
-        if(account.getShippingStateProvince()!= null){
+        if (account.getShippingStateProvince() != null) {
             new Input(driver, "Shipping State/Province").write(account.getShippingStateProvince());
         }
 
-        if(account.getBillingZipPostalCode()!= null){
+        if (account.getBillingZipPostalCode() != null) {
             new Input(driver, "Billing Zip/Postal Code").write(account.getBillingZipPostalCode());
         }
 
-        if(account.getShippingZipPostalCode()!= null){
+        if (account.getShippingZipPostalCode() != null) {
             new Input(driver, "Shipping Zip/Postal Code").write(account.getShippingZipPostalCode());
         }
 
-        if(account.getBillingCountry()!= null){
+        if (account.getBillingCountry() != null) {
             new Input(driver, "Billing Country").write(account.getBillingCountry());
         }
 
-        if(account.getShippingCountry()!= null){
+        if (account.getShippingCountry() != null) {
             new Input(driver, "Shipping Country").write(account.getShippingCountry());
         }
         return this;
@@ -102,7 +101,7 @@ public class AccountModal extends BaseModal{
         WebElement searchFieldToClick = driver.findElement(FIELD_PARENT_ACCOUNT);
         searchFieldToClick.click();
         AllureUtils.attachScreenshot(driver);
-        WebElement optionToClick = driver.findElement(By.xpath(String.format(optionLocator,optionName)));
+        WebElement optionToClick = driver.findElement(By.xpath(String.format(optionLocator, optionName)));
         optionToClick.click();
     }
 

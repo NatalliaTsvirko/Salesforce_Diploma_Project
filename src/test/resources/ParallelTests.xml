@@ -10,9 +10,9 @@
     <parameter name="browser" value="chrome"/>
     <test name="Create Account + Create Contact">
         <classes>
-        <class name="tests.CreateAccountTest"/>
-        <class name="tests.CreateContactTest"/>
-    </classes>
+            <class name="tests.CreateAccountTest"/>
+            <class name="tests.CreateContactTest"/>
+        </classes>
     </test>
     <test name=" Create Lead">
         <classes>

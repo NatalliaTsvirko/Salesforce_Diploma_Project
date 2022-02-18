@@ -14,6 +14,7 @@ public class AccountDetailsPage extends BasePage {
 
     private static final By TITLE_DETAILS = By.xpath("//li[@title='Details']");
     private static final By HOME_LINK = By.xpath("//a[@title='Home']");
+    private static final By ACCOUNTS_MENU_LINK = By.xpath("//*[@title='Accounts']");
 
     public AccountDetailsPage(WebDriver driver) {
         super(driver);
@@ -25,9 +26,8 @@ public class AccountDetailsPage extends BasePage {
     }
 
     @Override
-    public AccountDetailsPage open() {
-        driver.get(BASE_URL + "lightning/r/Account/0015j00000XaFT1AAN/view");
-        return this;
+    public BasePage open() {
+        return null;
     }
 
     public Account getAccountDetailsInfo() {
@@ -92,5 +92,12 @@ public class AccountDetailsPage extends BasePage {
         log.info("open home page");
         jsClick(driver.findElement(HOME_LINK));
 
+    }
+
+    @Step("Click account menu link")
+    public AccountsPage clickAccountMenuLink() {
+        log.info("open account page");
+        jsClick(driver.findElement(ACCOUNTS_MENU_LINK));
+        return new AccountsPage(driver);
     }
 }

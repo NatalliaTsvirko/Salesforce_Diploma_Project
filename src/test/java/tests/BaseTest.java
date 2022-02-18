@@ -13,12 +13,11 @@ import java.util.concurrent.TimeUnit;
 @Listeners(TestListener.class)
 public class BaseTest {
 
-    String USERNAME = System.getenv().getOrDefault("USER_NAME", PropertyReader.getProperty("salesforce.username"));
-    String PASSWORD = System.getenv().getOrDefault("USER_PASSWORD", PropertyReader.getProperty("salesforce.password"));
-
     protected WebDriver driver;
     protected LoginPage loginPage;
     protected HomePage homePage;
+    String USERNAME = System.getenv().getOrDefault("USER_NAME", PropertyReader.getProperty("salesforce.username"));
+    String PASSWORD = System.getenv().getOrDefault("USER_PASSWORD", PropertyReader.getProperty("salesforce.password"));
 
     @Parameters({"browser"})
     @BeforeClass(alwaysRun = true)

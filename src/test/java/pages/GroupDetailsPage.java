@@ -33,12 +33,12 @@ public class GroupDetailsPage extends BasePage {
         log.info(String.format("Filling form with account info: %s", groups));
 
         String groupsDescription = new GroupDetailElement(driver, "Description").getTextDescription();
-        if (groupsDescription != "" ) {
+        if (groupsDescription != "") {
             groups.setDescription(groupsDescription);
         }
 
         String groupsInformation = new GroupDetailElement(driver, "Information").getTextInformation();
-        if (groupsInformation != "" ) {
+        if (groupsInformation != "") {
             groups.setInformation(groupsInformation);
         }
         return groups;

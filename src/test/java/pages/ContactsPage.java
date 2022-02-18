@@ -10,7 +10,6 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 @Log4j2
 public class ContactsPage extends BasePage {
 
-    private final String contactCheckbox = "//a[text()='%s']//ancestor::tr//span[@class='slds-checkbox--faux']";
     private static final By COLUMN_NAME = By.xpath("//span[@title='Name']");
     private static final By SEND_EMAIL_BUTTON = By.xpath("//a[@title='Send List Email']");
     private static final By DETAILS_TAB = By.xpath("//div[contains(@class,'active')]//*[@id='detailTab__item']");
@@ -19,6 +18,7 @@ public class ContactsPage extends BasePage {
     private static final By IFRAME_SECOND = By.xpath("//iframe[@class='cke_wysiwyg_frame cke_reset']");
     private static final By TEXT_BOX_IFRAME = By.xpath("//body[contains(@class,'cke_editable')]");
     private static final By SAVE_BUTTON_ON_LIST_EMAIL = By.xpath("//button[@type='button' and text()='Send']");
+    private final String contactCheckbox = "//a[text()='%s']//ancestor::tr//span[@class='slds-checkbox--faux']";
 
     public ContactsPage(WebDriver driver) {
         super(driver);

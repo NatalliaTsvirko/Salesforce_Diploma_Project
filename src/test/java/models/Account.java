@@ -1,7 +1,7 @@
 package models;
 
-import enums.Industry;
 import enums.AccountType;
+import enums.Industry;
 import lombok.Builder;
 import lombok.Data;
 

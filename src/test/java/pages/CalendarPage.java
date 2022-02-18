@@ -13,12 +13,12 @@ import utils.AllureUtils;
 @Log4j2
 public class CalendarPage extends BasePage {
 
-    private String optionViewCalendar = "//ul[@class='scrollable']//a[@title='%s']";
-    private String calendarList = "//div[contains(@class,'uiDatePickerGrid--default')]//tbody/tr[@class='calRow']//td[@data-aura-class='uiDayInMonthCell']/span[text()='%s']";
-    private String eventDayOnList = "//th/ancestor::tbody//th//span[contains(text(),'%s')]";
     private final static By LINK_VIEW = By.xpath("//a[@title='View']");
     private final static By TITLE_CALENDAR = By.xpath("//p[text()='Calendar']");
     private final static By BUTTON_NEW_EVENT = By.xpath("//button[contains(@class,'new-event-button')]");
+    private String optionViewCalendar = "//ul[@class='scrollable']//a[@title='%s']";
+    private String calendarList = "//div[contains(@class,'uiDatePickerGrid--default')]//tbody/tr[@class='calRow']//td[@data-aura-class='uiDayInMonthCell']/span[text()='%s']";
+    private String eventDayOnList = "//th/ancestor::tbody//th//span[contains(text(),'%s')]";
 
     public CalendarPage(WebDriver driver) {
         super(driver);
@@ -45,8 +45,8 @@ public class CalendarPage extends BasePage {
 
     @Step("Get start date event on list psge")
     public int getCreatedEventDay(String eventDay) {
-        int numberOfElements = driver.findElements(By.xpath(String.format(eventDayOnList, eventDay))).size();
-        return numberOfElements;
+        int countOfElementsOnList = driver.findElements(By.xpath(String.format(eventDayOnList, eventDay))).size();
+        return countOfElementsOnList;
 
     }
 

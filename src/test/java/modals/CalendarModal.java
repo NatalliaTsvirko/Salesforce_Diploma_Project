@@ -22,7 +22,7 @@ public class CalendarModal extends BaseModal {
 
     public CalendarModal fillForm(Calendar calendar) {
 
-        log.info(String.format("Filling form with account info: %s", calendar));
+        log.info(String.format("Filling form with calendar info: %s", calendar));
 
         if (calendar.getSubject() != null) {
             new Dropdown(driver, "Subject").selectOption(calendar.getSubject().getName());
@@ -33,7 +33,7 @@ public class CalendarModal extends BaseModal {
         }
 
         if (calendar.getCalendarType() != null) {
-            new DropdownCalendarGroups(driver,"Type").selectOptions(calendar.getCalendarType().getName());
+            new DropdownCalendarGroups(driver, "Type").selectOptions(calendar.getCalendarType().getName());
         }
 
         if (calendar.getDescription() != null) {

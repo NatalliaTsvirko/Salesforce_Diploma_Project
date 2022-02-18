@@ -7,10 +7,7 @@ import models.Lead;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-import pages.AccountsPage;
-import pages.HomePage;
-import pages.LeadsDetailsPage;
-import pages.LeadsPage;
+import pages.*;
 import utils.LeadsGenerator;
 
 import static org.testng.Assert.assertEquals;
@@ -26,6 +23,7 @@ public class LeadsTest extends BaseTest {
     LeadsModal leadsModal;
     LeadsDetailsPage leadsDetailsPage;
     LeadsGenerator leadsGenerator;
+    OpportunitiesPage opportunitiesPage;
 
     @BeforeClass
     public void initializePages() {
@@ -35,6 +33,7 @@ public class LeadsTest extends BaseTest {
         leadsModal = new LeadsModal(driver);
         leadsDetailsPage = new LeadsDetailsPage(driver);
         leadsGenerator = new LeadsGenerator();
+        opportunitiesPage = new OpportunitiesPage(driver);
 
     }
 
@@ -67,12 +66,11 @@ public class LeadsTest extends BaseTest {
         assertEquals(leadsDetailsPage.getLeadStatus(), expectedStatusNurturing);
         leadsDetailsPage.clickButtonStatus();
         leadsDetailsPage.clickConvertButton();
-        assertTrue(leadsDetailsPage.getMessageConvertLead());
+        assertTrue(leadsDetailsPage.isConvertLeadMessageDisplayed());
         leadsDetailsPage.clickButtonGoToLeads();
-        leadsPage.clickOpportunityMenuLink();
-        String findByName = leadName.getCompany();
-        int numberOfElements = leadsPage.getVisibleLeadName(findByName);
-        assertEquals(numberOfElements, 1, "Element not found");
+        opportunitiesPage.clickOpportunityMenuLink();
+        assertEquals(opportunitiesPage.getLeadNameOnList(leadName.getCompany()), 1, "Element not found");
+
     }
 
 
@@ -91,12 +89,10 @@ public class LeadsTest extends BaseTest {
         assertEquals(leadsDetailsPage.getLeadStatus(), expectedStatusNurturing);
         leadsDetailsPage.clickButtonStatus();
         leadsDetailsPage.clickConvertButton();
-        assertTrue(leadsDetailsPage.getMessageConvertLead());
+        assertTrue(leadsDetailsPage.isConvertLeadMessageDisplayed());
         leadsDetailsPage.clickButtonGoToLeads();
-        leadsPage.clickOpportunityMenuLink();
-        String findByName = leadName.getCompany();
-        int numberOfElements = leadsPage.getVisibleLeadName(findByName);
-        assertEquals(numberOfElements, 1, "Element not found");
+        opportunitiesPage.clickOpportunityMenuLink();
+        assertEquals(opportunitiesPage.getLeadNameOnList(leadName.getCompany()), 1, "Element not found");
 
     }
 
@@ -116,14 +112,11 @@ public class LeadsTest extends BaseTest {
         assertEquals(leadsDetailsPage.getLeadStatus(), expectedStatusNurturing);
         leadsDetailsPage.clickButtonStatus();
         leadsDetailsPage.clickConvertButton();
-        assertTrue(leadsDetailsPage.getMessageConvertLead());
+        assertTrue(leadsDetailsPage.isConvertLeadMessageDisplayed());
         leadsDetailsPage.clickButtonGoToLeads();
-        leadsPage.clickOpportunityMenuLink();
-        String findByNameCompany = leadName.getCompany();
-        leadsPage.deleteLeads(findByNameCompany);
-        leadsPage.clickDeleteButton();
-        int numberOfElements = leadsPage.getVisibleLeadName(findByNameCompany);
-        assertEquals(numberOfElements, 0, "Element on page");
+        opportunitiesPage.clickOpportunityMenuLink();
+        leadsPage.deleteLeads(leadName.getCompany());
+        assertEquals(opportunitiesPage.getLeadNameOnList(leadName.getCompany()), 0, "Element not found");
 
     }
 }

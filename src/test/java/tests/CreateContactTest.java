@@ -41,7 +41,7 @@ public class CreateContactTest extends BaseTest {
         driver.navigate().refresh();
     }
 
-    @Test(description = "Create contact with all data",  groups = {"Smoke", "Regression"})
+    @Test(description = "Create contact with all data", groups = {"Smoke", "Regression"})
     @Description("Create contact with all data")
     public void createContactWithAllData() {
         Contact testContact = contactsGenerator.getContactsWithAllData();
@@ -57,15 +57,15 @@ public class CreateContactTest extends BaseTest {
         assertEquals(actualContactsDetailsInfo, testContact, "Contacts details don't match test account data");
     }
 
-    @Test(description = "Send email list to contact",groups = {"Smoke"})
+    @Test(description = "Send email list to contact", groups = {"Smoke"})
     @Description("Send email list to contact")
-    public void sendEmailList(){
+    public void sendEmailList() {
         boolean isloggedIn = loginPage.open().login(USERNAME, PASSWORD).isPageOpened();
         assertTrue(isloggedIn);
         homePage.clickContactsMenuLink();
         contactsPage.setContactCheckbox("Bernardina Gerlach");
         contactsPage.clickButtonSendEmail();
-        contactsPage.fillFormSendList("Hello","All cool");
+        contactsPage.fillFormSendList("Hello", "All cool");
         assertTrue(contactsPage.isNotificationMessageDisplayed());
     }
 }

@@ -52,7 +52,7 @@ public class AccountsPage extends BasePage {
     }
 
     @Step("Get searching account name")
-    public String getAccountName() {
+    public String getAccountNameOnList() {
         log.info("get account name");
         AllureUtils.attachScreenshot(driver);
         return driver.findElement(FIND_ACCOUNT_NAME).getText();

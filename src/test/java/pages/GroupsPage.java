@@ -3,7 +3,7 @@ package pages;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
-public class GroupsPage extends BasePage{
+public class GroupsPage extends BasePage {
 
     private final static By NEW_BUTTON = By.xpath("//a[@title='New']");
 

@@ -12,7 +12,6 @@ import utils.AllureUtils;
 @Log4j2
 public class ContactsModal extends BaseModal {
 
-    private String optionLocator = "//span[@title='%s']/ancestor::ul[@aria-label='Recent Accounts']";
     private static final By FIELD_ACCOUNT_NAME = By.xpath("//label[text()='Account Name']");
     private static final By TITLE = By.xpath("//input[@name='Title']");
     private static final By SUFFIX = By.xpath("//input[@name='suffix']");
@@ -30,6 +29,7 @@ public class ContactsModal extends BaseModal {
     private static final By FAX = By.xpath("//input[@name='Fax']");
     private static final By DEPARTMENT = By.xpath("//input[@name='Department']");
     private static final By MAILING_STREET = By.xpath("//label[text()='Mailing Street']/ancestor::lightning-textarea//textarea[@name='street']");
+    private String optionLocator = "//span[@title='%s']/ancestor::ul[@aria-label='Recent Accounts']";
 
     public ContactsModal(WebDriver driver) {
         super(driver);
@@ -37,7 +37,7 @@ public class ContactsModal extends BaseModal {
 
     public ContactsModal fillForm(Contact contacts) {
 
-        log.info(String.format("Filling form with account info: %s", contacts));
+        log.info(String.format("Filling form with contact info: %s", contacts));
 
         if (contacts.getSalutation() != null) {
             new Dropdown(driver, "Salutation").selectOption(contacts.getSalutation().getName());

@@ -1,8 +1,8 @@
 package utils;
 
 import com.github.javafaker.Faker;
-import enums.Industry;
 import enums.AccountType;
+import enums.Industry;
 import models.Account;
 
 

@@ -36,9 +36,9 @@ public class LeadsDetailsPage extends BasePage {
     }
 
     @Override
-    public LeadsDetailsPage open() {
-        driver.get(BASE_URL + "/lightning/r/Lead/00Q5j000006bQoFEAU/view");
-        return this;
+    public BasePage open() {
+
+        return null;
     }
 
     public Lead getLeadsDetailsInfo() {
@@ -158,7 +158,7 @@ public class LeadsDetailsPage extends BasePage {
     }
 
     @Step("Get message about lead is convert")
-    public boolean getMessageConvertLead() {
+    public boolean isConvertLeadMessageDisplayed() {
         log.info("Get message about lead is convert");
         wait.until(ExpectedConditions.visibilityOfElementLocated(CREATED_LEADS_MESSAGE));
         return driver.findElement(CREATED_LEADS_MESSAGE).isDisplayed();

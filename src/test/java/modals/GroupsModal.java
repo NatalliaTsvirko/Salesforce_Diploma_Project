@@ -30,7 +30,7 @@ public class GroupsModal extends BaseModal {
 
     public GroupsModal fillForm(Group group) {
 
-        log.info(String.format("Filling form with account info: %s", group));
+        log.info(String.format("Filling form with group info: %s", group));
 
         if (group.getName() != null) {
             driver.findElement(INPUT_NAME).sendKeys(group.getName());
@@ -45,7 +45,7 @@ public class GroupsModal extends BaseModal {
         }
 
         if (group.getAccessType() != null) {
-            new DropdownCalendarGroups(driver,"Access Type").selectOptions(group.getAccessType().getName());
+            new DropdownCalendarGroups(driver, "Access Type").selectOptions(group.getAccessType().getName());
         }
 
         return this;
@@ -58,12 +58,11 @@ public class GroupsModal extends BaseModal {
     }
 
     @Step("Upload image for groups")
-    public void chooseFile() {
+    public void chooseFile(String pathName) {
         WebElement input = driver.findElement(CHOOSE_FILE_BUTTON);
-        File file = new File("src/main/resources/spongebob.jpg");
+        File file = new File(pathName);
         input.sendKeys(file.getAbsolutePath());
         wait.until(ExpectedConditions.elementToBeClickable(NEXT_BUTTON)).click();
-        //driver.findElement(NEXT_BUTTON).click();
         wait.until(ExpectedConditions.elementToBeClickable(DONE_BUTTON)).click();
         wait.until(ExpectedConditions.visibilityOfElementLocated(GROUP_DETAILS_TEXT));
     }

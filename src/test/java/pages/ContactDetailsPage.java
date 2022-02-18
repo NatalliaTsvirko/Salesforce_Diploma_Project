@@ -21,9 +21,8 @@ public class ContactDetailsPage extends BasePage {
     }
 
     @Override
-    public ContactDetailsPage open() {
-        driver.get(BASE_URL + "/lightning/r/Contact/0035j00000JJaW4AAL/view");
-        return this;
+    public BasePage open() {
+        return null;
     }
 
     public Contact getContactsDetailsInfo() {
@@ -33,42 +32,42 @@ public class ContactDetailsPage extends BasePage {
         log.info(String.format("Filling form with account info: %s", contacts));
 
         String contactName = new LightningFormattedElement(driver, "Name").getText();
-        if (contactName != "" ) {
+        if (contactName != "") {
             contacts.setFirstName(contactName);
         }
 
         String contactsAccountName = new LightningFormattedElement(driver, "Account Name").getText();
-        if (contactsAccountName != "" ) {
+        if (contactsAccountName != "") {
             contacts.setAccountName(contactsAccountName);
         }
 
         String contactsTitle = new LightningFormattedElement(driver, "Title").getText();
-        if (contactsTitle != "" ) {
+        if (contactsTitle != "") {
             contacts.setTitle(contactsTitle);
         }
 
         String contactsPhone = new LightningFormattedElement(driver, "Phone").getText();
-        if (contactsPhone != "" ) {
+        if (contactsPhone != "") {
             contacts.setPhone(contactsPhone);
         }
 
         String contactsEmail = new LightningFormattedElement(driver, "Email").getText();
-        if (contactsEmail != "" ) {
+        if (contactsEmail != "") {
             contacts.setEmail(contactsEmail);
         }
 
         String contactsMobile = new LightningFormattedElement(driver, "Mobile").getText();
-        if (contactsMobile != "" ) {
+        if (contactsMobile != "") {
             contacts.setMobile(contactsMobile);
         }
 
         String contactsReportsTo = new LightningFormattedElement(driver, "Reports To").getText();
-        if (contactsReportsTo != "" ) {
+        if (contactsReportsTo != "") {
             contacts.setReportsTo(contactsReportsTo);
         }
 
         String contactsFax = new LightningFormattedElement(driver, "Fax").getText();
-        if (contactsFax != "" ) {
+        if (contactsFax != "") {
             contacts.setFax(contactsFax);
         }
         return contacts;
