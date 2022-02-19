@@ -6,6 +6,7 @@ import models.Calendar;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
+import pages.CalendarDetailsPage;
 import pages.CalendarPage;
 import utils.CalendarGenerator;
 
@@ -17,14 +18,14 @@ public class CalendarTest extends BaseTest {
     CalendarPage calendarPage;
     CalendarModal calendarModal;
     CalendarGenerator calendarGenerator;
-
+    CalendarDetailsPage calendarDetailsPage;
 
     @BeforeClass
     public void initializePages() {
         calendarPage = new CalendarPage(driver);
         calendarModal = new CalendarModal(driver);
         calendarGenerator = new CalendarGenerator();
-
+        calendarDetailsPage = new CalendarDetailsPage(driver);
     }
 
     @AfterMethod
@@ -37,20 +38,21 @@ public class CalendarTest extends BaseTest {
     @Test(description = "Create calendar event ", groups = {"Regression"})
     @Description("Create calendar event ")
     public void createNewEvent() {
+        String expectedDate = "2/26/2022, 1:45 PM";
         Calendar testCalendar = calendarGenerator.getCalendarData();
         boolean isloggedIn = loginPage.open().login(USERNAME, PASSWORD).isPageOpened();
         assertTrue(isloggedIn);
-        homePage.clickCalendarMenuLink()
-                .setStartDate("21");
+        homePage.clickCalendarMenuLink();
         calendarPage.clickNewEventButton();
-        calendarModal.setEventTime("12:00 AM");
+        calendarModal.setEventDate("02/26/2022");
+        calendarModal.setEventTime("1:45 PM");
         calendarModal.fillForm(testCalendar)
                 .clickSaveButton();
         assertTrue(calendarPage.isNotificationMessageDisplayed());
         calendarPage.setDecorationPageView("Table");
-        String expectedEventDate = "2/21/2022, 12:00 AM";
-        int numberOfElements = calendarPage.getCreatedEventDay(expectedEventDate);
-        assertEquals(numberOfElements, 1, "Element on page");
+        calendarPage.clickCreatedEventDay(expectedDate, "Meeting");
+        Calendar actualCalendarDetailsInfo = calendarDetailsPage.getCalendarDetailsInfo();
+        assertEquals(actualCalendarDetailsInfo, testCalendar, "Calendar details don't match test calendar data");
 
     }
 }

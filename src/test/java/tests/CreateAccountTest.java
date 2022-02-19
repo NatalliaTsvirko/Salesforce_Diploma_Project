@@ -5,10 +5,7 @@ import io.qameta.allure.Description;
 import lombok.extern.log4j.Log4j2;
 import modals.AccountModal;
 import models.Account;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.DataProvider;
-import org.testng.annotations.Test;
+import org.testng.annotations.*;
 import pages.AccountDetailsPage;
 import pages.AccountsPage;
 import utils.AccountsGenerator;
@@ -24,29 +21,32 @@ public class CreateAccountTest extends BaseTest {
     AccountModal accountModal;
     AccountsGenerator accountsGenerator;
 
-
     @BeforeClass
     public void initializePages() {
         accountsPage = new AccountsPage(driver);
         accountDetailsPage = new AccountDetailsPage(driver);
         accountModal = new AccountModal(driver);
         accountsGenerator = new AccountsGenerator();
+    }
 
+    @BeforeMethod(alwaysRun = true)
+    public void login() {
+        loginPage.open().login(USERNAME, PASSWORD).isPageOpened();
     }
 
     @AfterMethod(alwaysRun = true)
     public void clearCookie() {
-        accountDetailsPage.clickHomeLink();
+        homePage.logOut();
+        driver.manage().deleteAllCookies();
         driver.navigate().refresh();
-
     }
 
-    @Test(description = "Create account with all data", dataProvider = "Create account with different data", groups = {"Smoke"})
-    @Description("Create account with all data")
+    @Test(description = "Create account with all different data", dataProvider = "Create account with different data", groups = {"Smoke"})
+    @Description("Create account with all different data")
     public void createAccount(Account testAccount) {
         homePage.clickAccountMenuLink()
                 .clickNewButton();
-        accountModal.parentAccountNameSearch("Tristan");
+        accountModal.parentAccountNameSearch("Emie");
         accountModal.fillForm(testAccount).clickSaveButton();
         assertTrue(accountsPage.isNotificationMessageDisplayed());
         Account actualAccountDetailsInfo = accountsPage.openDetailsTab()
@@ -66,8 +66,6 @@ public class CreateAccountTest extends BaseTest {
     @Test(description = "Search account name on account page", groups = {"Regression"})
     @Description("Search account name on account page")
     public void searchAccount() {
-        boolean isloggedIn = loginPage.open().login(USERNAME, PASSWORD).isPageOpened();
-        assertTrue(isloggedIn);
         homePage.clickAccountMenuLink()
                 .clickNewButton();
         Account testName = accountsGenerator.getWithAccountName();

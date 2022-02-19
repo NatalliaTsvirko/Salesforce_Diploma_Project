@@ -16,6 +16,7 @@ public class BaseTest {
     protected WebDriver driver;
     protected LoginPage loginPage;
     protected HomePage homePage;
+
     String USERNAME = System.getenv().getOrDefault("USER_NAME", PropertyReader.getProperty("salesforce.username"));
     String PASSWORD = System.getenv().getOrDefault("USER_PASSWORD", PropertyReader.getProperty("salesforce.password"));
 
@@ -28,7 +29,7 @@ public class BaseTest {
         testContext.setAttribute("driver", driver);
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(7, TimeUnit.SECONDS);
-        driver.manage().timeouts().pageLoadTimeout(20, TimeUnit.SECONDS);
+        driver.manage().timeouts().pageLoadTimeout(30, TimeUnit.SECONDS);
         loginPage = new LoginPage(driver);
         homePage = new HomePage(driver);
 

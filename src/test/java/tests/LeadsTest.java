@@ -6,6 +6,7 @@ import modals.LeadsModal;
 import models.Lead;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import pages.*;
 import utils.LeadsGenerator;
@@ -34,24 +35,27 @@ public class LeadsTest extends BaseTest {
         leadsDetailsPage = new LeadsDetailsPage(driver);
         leadsGenerator = new LeadsGenerator();
         opportunitiesPage = new OpportunitiesPage(driver);
-
     }
 
-    @AfterMethod
+    @BeforeMethod(alwaysRun = true)
+    public void login() {
+        loginPage.open().login(USERNAME, PASSWORD).isPageOpened();
+    }
+
+    @AfterMethod(alwaysRun = true)
     public void clearCookie() {
+        homePage.logOut();
         driver.manage().deleteAllCookies();
         driver.navigate().refresh();
     }
 
-    @Test(description = "Create new lead", groups = {"Smoke"})
+    @Test(description = "Create new lead with status 'New'", groups = {"Smoke"})
     @Description("Create new lead with status 'New'")
     public void createLeadStatusNew() {
         String expectedStatusNew = "New";
         String expectedStatusWorking = "Working";
         String expectedStatusNurturing = "Nurturing";
         Lead leadName = leadsGenerator.getLeadWithName();
-        boolean isloggedIn = loginPage.open().login(USERNAME, PASSWORD).isPageOpened();
-        assertTrue(isloggedIn);
         homePage.clickLeadsMenuLink()
                 .clickNewButton();
         leadsModal.fillForm(leadName).clickSaveButton();
@@ -73,14 +77,11 @@ public class LeadsTest extends BaseTest {
 
     }
 
-
-    @Test(description = "Create new lead", groups = {"Smoke"})
+    @Test(description = "Create new lead with status 'Nurturing'", groups = {"Smoke"})
     @Description("Create new lead with status 'Nurturing'")
     public void createLead() {
         String expectedStatusNurturing = "Nurturing";
         Lead leadName = leadsGenerator.getLeadWithNurturingStatus();
-        boolean isloggedIn = loginPage.open().login(USERNAME, PASSWORD).isPageOpened();
-        assertTrue(isloggedIn);
         homePage.clickLeadsMenuLink()
                 .clickNewButton();
         leadsModal.fillForm(leadName).clickSaveButton();
@@ -96,14 +97,11 @@ public class LeadsTest extends BaseTest {
 
     }
 
-
     @Test(description = "Delete lead on page", groups = {"Smoke"})
     @Description("Delete lead on page")
     public void deleteLead() {
         String expectedStatusNurturing = "Nurturing";
         Lead leadName = leadsGenerator.getLeadWithNurturingStatus();
-        boolean isLoggedIn = loginPage.open().login(USERNAME, PASSWORD).isPageOpened();
-        assertTrue(isLoggedIn);
         homePage.clickLeadsMenuLink()
                 .clickNewButton();
         leadsModal.fillForm(leadName).clickSaveButton();

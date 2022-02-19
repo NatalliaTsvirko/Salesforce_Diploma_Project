@@ -17,8 +17,7 @@ public class CalendarPage extends BasePage {
     private final static By TITLE_CALENDAR = By.xpath("//p[text()='Calendar']");
     private final static By BUTTON_NEW_EVENT = By.xpath("//button[contains(@class,'new-event-button')]");
     private String optionViewCalendar = "//ul[@class='scrollable']//a[@title='%s']";
-    private String calendarList = "//div[contains(@class,'uiDatePickerGrid--default')]//tbody/tr[@class='calRow']//td[@data-aura-class='uiDayInMonthCell']/span[text()='%s']";
-    private String eventDayOnList = "//th/ancestor::tbody//th//span[contains(text(),'%s')]";
+    private String eventDateOnList = "//span[text()='%s']/ancestor::tr//a[@title='%s']";
 
     public CalendarPage(WebDriver driver) {
         super(driver);
@@ -35,19 +34,10 @@ public class CalendarPage extends BasePage {
         return this;
     }
 
-    @Step("Set start date event")
-    public void setStartDate(String setDay) {
-        WebElement dayToClick = driver.findElement(By.xpath(String.format(calendarList, setDay)));
-        wait.until(ExpectedConditions.elementToBeClickable(dayToClick));
-        dayToClick.click();
-
-    }
-
     @Step("Get start date event on list psge")
-    public int getCreatedEventDay(String eventDay) {
-        int countOfElementsOnList = driver.findElements(By.xpath(String.format(eventDayOnList, eventDay))).size();
-        return countOfElementsOnList;
-
+    public void clickCreatedEventDay(String eventDay, String eventSubject) {
+        WebElement dateOnList = driver.findElement(By.xpath(String.format(eventDateOnList, eventDay, eventSubject)));
+        dateOnList.click();
     }
 
     @Step("Click 'new event' button on calendar page")
@@ -56,7 +46,6 @@ public class CalendarPage extends BasePage {
         wait.until(ExpectedConditions.elementToBeClickable(BUTTON_NEW_EVENT));
         jsClick(driver.findElement(BUTTON_NEW_EVENT));
         return new CalendarModal(driver);
-
     }
 
     @Step("Select view decoration page")
@@ -65,6 +54,5 @@ public class CalendarPage extends BasePage {
         jsClick(driver.findElement(LINK_VIEW));
         AllureUtils.attachScreenshot(driver);
         driver.findElement(By.xpath(String.format(optionViewCalendar, optionName))).click();
-
     }
 }

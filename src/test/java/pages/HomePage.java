@@ -5,18 +5,22 @@ import io.qameta.allure.Step;
 import lombok.extern.log4j.Log4j2;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 
 @Log4j2
 public class HomePage extends BasePage {
 
     private static final By SALES_LABEL = By.xpath("//*[@title='Sales']");
     private static final By ACCOUNTS_MENU_LINK = By.xpath("//*[@title='Accounts']");
+    private static final By HOME_MENU_LINK = By.xpath("//*[@title='Home']");
     private static final By CONTACTS_MENU_LINK = By.xpath("//*[@title='Contacts']");
     private static final By LEADS_MENU_LINK = By.xpath("//*[@title='Leads']");
     private static final By CALENDAR_MENU_LINK = By.xpath("//a[@title='Calendar']");
     private static final By PROFILE_BUTTON = By.xpath("//button[contains(@class,'branding-userProfile-button')]");
     private static final By LOGOUT_LINK = By.xpath("//a[contains(@class,'logout')]");
     private static final By GROUPS_LINK = By.xpath("//a[@title='Groups']");
+    private static final By LOGIN_BUTTON = By.id("Login");
+
 
     public HomePage(WebDriver driver) {
         super(driver);
@@ -80,7 +84,15 @@ public class HomePage extends BasePage {
     public void clickGroupsLink() {
         log.info("Click on 'groups' link");
         jsClick(driver.findElement(GROUPS_LINK));
-
     }
+
+    @Step("Logout user")
+    public void logOut() {
+        jsClick(driver.findElement(HOME_MENU_LINK));
+        driver.findElement(PROFILE_BUTTON).click();
+        driver.findElement(LOGOUT_LINK).click();
+        wait.until(ExpectedConditions.visibilityOfElementLocated(LOGIN_BUTTON));
+    }
+
 }
 

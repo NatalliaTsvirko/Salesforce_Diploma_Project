@@ -6,6 +6,7 @@ import modals.ContactsModal;
 import models.Contact;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import pages.ContactDetailsPage;
 import pages.ContactsPage;
@@ -24,7 +25,6 @@ public class CreateContactTest extends BaseTest {
     ContactsModal contactsModal;
     ContactsGenerator contactsGenerator;
 
-
     @BeforeClass
     public void initializePages() {
         homePage = new HomePage(driver);
@@ -32,11 +32,16 @@ public class CreateContactTest extends BaseTest {
         contactDetailsPage = new ContactDetailsPage(driver);
         contactsModal = new ContactsModal(driver);
         contactsGenerator = new ContactsGenerator();
-
     }
 
-    @AfterMethod
+    @BeforeMethod(alwaysRun = true)
+    public void login() {
+        loginPage.open().login(USERNAME, PASSWORD).isPageOpened();
+    }
+
+    @AfterMethod(alwaysRun = true)
     public void clearCookie() {
+        homePage.logOut();
         driver.manage().deleteAllCookies();
         driver.navigate().refresh();
     }
@@ -45,8 +50,6 @@ public class CreateContactTest extends BaseTest {
     @Description("Create contact with all data")
     public void createContactWithAllData() {
         Contact testContact = contactsGenerator.getContactsWithAllData();
-        boolean isloggedIn = loginPage.open().login(USERNAME, PASSWORD).isPageOpened();
-        assertTrue(isloggedIn);
         homePage.clickContactsMenuLink()
                 .clickNewButton();
         contactsModal.selectAccountName("Raynor-Boehm");
@@ -60,8 +63,6 @@ public class CreateContactTest extends BaseTest {
     @Test(description = "Send email list to contact", groups = {"Smoke"})
     @Description("Send email list to contact")
     public void sendEmailList() {
-        boolean isloggedIn = loginPage.open().login(USERNAME, PASSWORD).isPageOpened();
-        assertTrue(isloggedIn);
         homePage.clickContactsMenuLink();
         contactsPage.setContactCheckbox("Bernardina Gerlach");
         contactsPage.clickButtonSendEmail();

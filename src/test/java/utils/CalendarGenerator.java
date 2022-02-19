@@ -9,7 +9,7 @@ public class CalendarGenerator {
     public Calendar getCalendarData() {
 
         Calendar calendar = Calendar.builder()
-                .subject(Subject.CALL)
+                .subject(Subject.MEETING)
                 .location("KJH")
                 .calendarType(CalendarType.CALL)
                 .description("ytuutti")
