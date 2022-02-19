@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Smoke">
+    <groups>
+        <run>
+            <include name="Smoke"/>
+        </run>
+    </groups>
+    <parameter name="browser" value="chrome"/>
+    <test name="Login test + Create Account + Create Lead + Create Contact">
+        <classes>
+            <class name="tests.LoginTest"/>
+            <class name="tests.CreateAccountTest"/>
+            <class name="tests.LeadsTest"/>
+            <class name="tests.CreateContactTest"/>
+            <class name="tests.GroupsTest"/>
+            <class name="tests.CalendarTest"/>
+        </classes>
+    </test> <!-- Test -->
+</suite>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite thread-count="2" name="Test suite" parallel="classes">
+    <groups>
+        <run>
+            <include name="Regression"/>
+            <include name="Smoke"/>
+        </run>
+    </groups>
+    <parameter name="browser" value="chrome"/>
+    <test name="Create Account + Create Contact">
+        <classes>
+            <class name="tests.CreateAccountTest"/>
+            <class name="tests.CreateContactTest"/>
+        </classes>
+    </test>
+    <test name=" Create Lead">
+        <classes>
+            <class name="tests.LeadsTest"/>
+        </classes>
+    </test> <!-- Test -->
+</suite>
