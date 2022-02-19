@@ -7,10 +7,8 @@ import io.qameta.allure.Step;
 import lombok.extern.log4j.Log4j2;
 import models.Calendar;
 import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Actions;
 
 @Log4j2
 public class CalendarModal extends BaseModal {
@@ -48,11 +46,8 @@ public class CalendarModal extends BaseModal {
 
     @Step("Set event start date")
     public String setEventDate(String startDate) {
-        Actions actions = new Actions(driver);
-        actions.moveToElement(driver.findElement(DATE_FIELD_START)).click()
-                .sendKeys(Keys.BACK_SPACE, Keys.CLEAR)
-                .build().perform();
         WebElement dateStart = driver.findElement(DATE_FIELD_START);
+        dateStart.clear();
         dateStart.sendKeys(startDate);
         return startDate;
     }

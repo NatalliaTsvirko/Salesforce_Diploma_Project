@@ -19,6 +19,8 @@ public class CalendarTest extends BaseTest {
     CalendarModal calendarModal;
     CalendarGenerator calendarGenerator;
     CalendarDetailsPage calendarDetailsPage;
+    private String testDate = "2/26/2022";
+    private String testTime = "1:45 PM";
 
     @BeforeClass
     public void initializePages() {
@@ -38,19 +40,20 @@ public class CalendarTest extends BaseTest {
     @Test(description = "Create calendar event ", groups = {"Regression"})
     @Description("Create calendar event ")
     public void createNewEvent() {
-        String expectedDate = "2/26/2022, 1:45 PM";
+        String expectedDate = testDate + ", " + testTime;
         Calendar testCalendar = calendarGenerator.getCalendarData();
         boolean isloggedIn = loginPage.open().login(USERNAME, PASSWORD).isPageOpened();
         assertTrue(isloggedIn);
         homePage.clickCalendarMenuLink();
         calendarPage.clickNewEventButton();
-        calendarModal.setEventDate("02/26/2022");
-        calendarModal.setEventTime("1:45 PM");
+        calendarModal.setEventDate(testDate);
+        calendarModal.setEventTime(testTime);
         calendarModal.fillForm(testCalendar)
                 .clickSaveButton();
         assertTrue(calendarPage.isNotificationMessageDisplayed());
         calendarPage.setDecorationPageView("Table");
-        calendarPage.clickCreatedEventDay(expectedDate, "Meeting");
+        String getSubject = String.valueOf(testCalendar.getSubject().getName());
+        calendarPage.clickCreatedEventDay(expectedDate, getSubject);
         Calendar actualCalendarDetailsInfo = calendarDetailsPage.getCalendarDetailsInfo();
         assertEquals(actualCalendarDetailsInfo, testCalendar, "Calendar details don't match test calendar data");
 

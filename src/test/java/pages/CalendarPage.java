@@ -6,7 +6,6 @@ import lombok.extern.log4j.Log4j2;
 import modals.CalendarModal;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import utils.AllureUtils;
 
@@ -34,10 +33,9 @@ public class CalendarPage extends BasePage {
         return this;
     }
 
-    @Step("Get start date event on list psge")
+    @Step("Get start date event on list page")
     public void clickCreatedEventDay(String eventDay, String eventSubject) {
-        WebElement dateOnList = driver.findElement(By.xpath(String.format(eventDateOnList, eventDay, eventSubject)));
-        dateOnList.click();
+        driver.findElement(By.xpath(String.format(eventDateOnList, eventDay, eventSubject))).click();
     }
 
     @Step("Click 'new event' button on calendar page")
